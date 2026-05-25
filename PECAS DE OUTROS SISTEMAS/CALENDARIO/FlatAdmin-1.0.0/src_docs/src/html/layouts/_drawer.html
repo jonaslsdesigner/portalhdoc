@@ -1,0 +1,46 @@
+<div class="mdk-drawer {{ drawerClass or '' }} js-mdk-drawer" id="default-drawer" data-align="{{ drawerAlign }}">
+  <div class="mdk-drawer__content">
+    <div class="sidebar sidebar-light sidebar-left simplebar" data-simplebar>
+      <div class="sidebar-heading sidebar-m-t">Documentation</div>
+      <ul class="sidebar-menu">
+      <div class="sidebar-block p-0">
+        <ul class="sidebar-menu">
+          <li class="sidebar-menu-item active open">
+            <a class="sidebar-menu-button" data-toggle="collapse" href="#docs_menu">
+              <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">dvr</i>
+              <span class="sidebar-menu-text">Getting Started</span>
+              <span class="ml-auto sidebar-menu-toggle-icon"></span>
+            </a>
+            <ul class="sidebar-submenu collapse show" id="docs_menu">
+              <li class="sidebar-menu-item{% if slug === 'index' %} active{% endif %}">
+                <a class="sidebar-menu-button" href="{{ prefix or '' }}index.html">
+                  <span class="sidebar-menu-text">View or Run Demos</span>
+                </a>
+              </li>
+              <li class="sidebar-menu-item{% if slug === 'installation' %} active{% endif %}">
+                <a class="sidebar-menu-button" href="{{ prefix or '' }}installation.html">
+                  <span class="sidebar-menu-text">Installation</span>
+                </a>
+              </li>
+              <li class="sidebar-menu-item{% if slug === 'configuration' %} active{% endif %}">
+                <a class="sidebar-menu-button" href="{{ prefix or '' }}configuration.html">
+                  <span class="sidebar-menu-text">Configuration</span>
+                </a>
+              </li>
+              <li class="sidebar-menu-item{% if slug === 'build' %} active{% endif %}">
+                <a class="sidebar-menu-button" href="{{ prefix or '' }}build.html">
+                  <span class="sidebar-menu-text">Build Project</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-p-a">
+        <a target="_blank" href="#" class="btn btn-outline-primary btn-block">Purchase Flat &dollar;49</a>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="navbar navbar-expand-sm navbar-main navbar-dark bg-dark {{ navbarClass or '' }} pr-0" id="navbar" data-primary>
+  <div class="{{ navbarContainerClass or containerClass }}{% if prefix !== 'fixed-' %} p-0{% endif %}">
+
+    <!-- Navbar toggler -->
+    {% if 'fluid' in prefix or 'mini' in prefix %}
+      <button class="navbar-toggler navbar-toggler-custom navbar-toggler-right d-block" type="button" data-toggle="sidebar">
+        <span class="material-icons">apps</span>
+      </button>
+    {% else %}
+      <button class="navbar-toggler navbar-toggler-right d-block d-md-none" type="button" data-toggle="sidebar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    {% endif %}
+
+    <!-- Navbar Brand -->
+    <a href="{{ home_url }}" class="navbar-brand {{ navbarBrandClass or '' }}">
+      <img class="navbar-brand-icon" src="assets/images/logo.svg" width="40" alt="Flat">
+        {% if navbarBrandText !== false %}<span>Flat</span>{% endif %}
+    </a>
+
+    {% if 'mini' in prefix %}
+    <div class="navbar-collapse collapse flex">
+      {% include 'layouts/_navbar.menu.html' %}
+    </div>
+    {% endif %}
+
+    <ul class="nav navbar-nav ml-auto d-none d-md-flex">
+      <li class="nav-item">
+        <a target="_blank" href="http://demo.frontted.com/flatadmin/2019031701/choose.html" class="nav-link">
+          <i class="material-icons">link</i> Live Demo
+        </a>
+      </li>
+      <li class="nav-item mr-3">
+        <a target="_blank" href="#" class="btn btn-outline-warning">
+          <i class="material-icons">star</i> Buy Flat
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</div>

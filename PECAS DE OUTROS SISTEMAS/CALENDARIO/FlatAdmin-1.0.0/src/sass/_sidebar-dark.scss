@@ -1,0 +1,64 @@
+.sidebar-dark .nav-tabs.sidebar-tabs {
+  .nav-link {
+    color: rgba(#fff, .24);
+  }
+  border-bottom-color: $sidebar-dark-border-color;
+  .nav-link.active,
+  .nav-item.show .nav-link {
+    color: #fff;
+    &::after {
+      border-bottom-color: $sidebar-dark-border-color;
+    }
+  }
+}
+
+.sidebar-dark .sidebar-link .material-icons {
+  color: $sm-dark-toggle-color;
+}
+
+.sidebar-dark label {
+  color: inherit;
+}
+
+.sidebar-dark .active {
+  border-bottom-color: $sidebar-dark-border-color;
+}
+
+.sidebar-dark .sidebar-menu > .active {
+  background-color: $sm-dark-open-bg;
+  &:not(:first-child) {
+    border-top: 1px solid $sidebar-dark-border-color;
+  }
+}
+
+// @todo: add to sidebar-style-guide
+.sidebar-dark .sidebar-menu-button:hover .sidebar-menu-toggle-icon {
+  color: $sm-dark-hover-toggle-color;
+}
+
+.sidebar-dark .text-body {
+  color: $white !important;
+}
+
+.sidebar-dark .sidebar-stats {
+  background-color: rgba(#ffffff, .1);
+  &__title {
+    color: rgba(#ffffff, .24);
+  }
+  &__value {
+    color: #ffffff;
+  }
+}
+
+.sidebar-dark [class*=border-] {
+  border-color: $sidebar-dark-border-color !important;
+}
+.sidebar-dark .text-muted {
+  color: $sm-dark-button-color !important;
+}
+
+.sidebar-dark .sidebar-submenu {
+  .sidebar-menu-text {
+    border-left: 1px dotted rgba($dark-gray, .24);
+  }
+}

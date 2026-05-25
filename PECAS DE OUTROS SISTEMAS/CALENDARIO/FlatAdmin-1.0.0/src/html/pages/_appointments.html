@@ -1,0 +1,326 @@
+<div class="{{ containerClass }} page__container">
+  <div class="z-0">
+    <ul class="nav nav-tabs nav-tabs-custom" role="tablist">
+      <li class="nav-item">
+        <a href="#tab-queue" class="nav-link active" data-toggle="tab" role="tab" aria-controls="tab-queue" aria-selected="true">
+          <span class="nav-link__count">06</span>
+          Queue
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#tab-earlier" class="nav-link" data-toggle="tab" role="tab" aria-selected="false">
+          <span class="nav-link__count">05</span>
+          Earlier
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#tab-wait-list" class="nav-link" data-toggle="tab" role="tab" aria-selected="false">
+          <span class="nav-link__count">03</span>
+          Wait List
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#tab-no-show" class="nav-link disabled" data-toggle="tab" role="tab" aria-selected="false">
+          <span class="nav-link__count">0</span>
+          No Show
+        </a>
+      </li>
+    </ul>
+    <div class="card">
+      <div class="tab-content">
+        <div class="tab-pane active show fade" id="tab-queue">
+          
+          <div 
+            class="table-responsive border-bottom" 
+            data-toggle="lists" 
+            data-lists-values='["js-lists-values-name", "js-lists-values-phone", "js-lists-values-appointment", "js-lists-values-wait"]'>
+            <table class="table mb-0 thead-border-top-0">
+              <thead>
+                <tr>
+                  <th style="width: 24px;"></th>
+                  <th style="width: 24px;"></th>
+                  <th class="sort" data-sort="js-lists-values-name">Patient</th>
+                  <th class="sort" data-sort="js-lists-values-phone" style="width: 150px;">Contact</th>
+                  <th class="sort" data-sort="js-lists-values-appointment" style="width: 37px;">Created</th>
+                  <th class="sort" data-sort="js-lists-values-wait" style="width: 120px;">Time</th>
+                  <th style="width: 24px;"></th>
+                </tr>
+              </thead>
+              <tbody class="list" data-toggle="dragula" data-dragula-moves="js-dragula-handle">
+                {% set items = [{
+                  avatar: 'assets/images/256_luke-porter-261779-unsplash.jpg',
+                  name: 'Michael Smith',
+                  gender: 'Male, 32 yr',
+                  phone: '202-555-0135',
+                  appointment: '05:10 PM',
+                  wait: '56 mins',
+                  vitals: true
+                }, {
+                  avatar: 'assets/images/avatar/green.svg',
+                  name: 'Connie Smith',
+                  gender: 'Female, 45 yr',
+                  phone: '202-555-0140',
+                  appointment: '04:10 PM',
+                  wait: '30 mins',
+                  vitals: true
+                }, {
+                  avatar: 'assets/images/256_daniel-gaffey-1060698-unsplash.jpg',
+                  name: 'John Connor',
+                  gender: 'Male, 25 yr',
+                  phone: '202-555-0121',
+                  appointment: '03:20 PM',
+                  wait: '40 mins',
+                  vitals: true
+                }, {
+                  avatar: 'assets/images/256_rsz_1andy-lee-642320-unsplash.jpg',
+                  name: 'Jenell D. Matney',
+                  gender: 'Male, 40 yr',
+                  phone: '202-555-0106',
+                  appointment: '02:10 PM'
+                }, {
+                  avatar: 'assets/images/256_joao-silas-636453-unsplash.jpg',
+                  name: 'Sherri J. Cardenas',
+                  gender: 'Female, 35 yr',
+                  phone: '202-555-0197',
+                  appointment: '01:10 PM'
+                }, {
+                  avatar: 'assets/images/256_jeremy-banks-798787-unsplash.jpg',
+                  name: 'Joseph S. Ferland',
+                  gender: 'Male, 22 yr',
+                  phone: '202-555-0136',
+                  appointment: '12:00 PM'
+                }] %}
+                {% set seq = cycler('warning', 'primary') %}
+                {% for item in items %}
+                <tr>
+                  <td class="text-muted"><i class="material-icons js-dragula-handle" style="cursor: move;">drag_handle</i></td>
+                  <td>
+                    <span class="badge d-block badge-soft-{{ seq.next() }}">{{ loop.index }}</span>
+                  </td>
+                  <td>
+                    <div class="media align-items-center">
+                      <div class="avatar avatar-xs mr-2">
+                        <img src="{{ item.avatar }}" alt="Avatar" class="avatar-img rounded-circle">
+                      </div>
+                      <div class="media-body d-flex flex-column">
+                        <strong class="js-lists-values-name">{{ item.name }}</strong>
+                        <small class="text-muted">{{ item.gender }}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-muted">
+                    <small class="js-lists-values-phone">{{ item.phone }}</small>
+                  </td>
+                  <td class="text-muted">
+                    <small class="js-lists-values-appointment">{{ item.appointment }}</small>
+                  </td>
+                  <td class="js-lists-values-wait">
+                    {% if item.wait %}
+                    <span class="badge d-block badge-soft-danger">{{ item.wait }}</span>
+                    {% else %}
+                    <span class="badge d-block badge-soft-info">Not Arrived</span>
+                    {% endif %}
+                  </td>
+                  
+                  <td><a href="" class="text-muted"><i class="material-icons">more_vert</i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="card-body text-right">
+            15 <span class="text-muted">of 1,430</span> <a href="#" class="text-muted-light"><i class="material-icons ml-1">arrow_forward</i></a>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="tab-earlier">
+          
+          <div 
+            class="table-responsive border-bottom" 
+            data-toggle="lists" 
+            data-lists-values='["js-lists-values-name", "js-lists-values-phone", "js-lists-values-appointment", "js-lists-values-wait"]'>
+            <table class="table mb-0 thead-border-top-0">
+              <thead>
+                <tr>
+                  <th style="width: 24px;"></th>
+                  <th style="width: 24px;"></th>
+                  <th class="sort" data-sort="js-lists-values-name">Patient</th>
+                  <th class="sort" data-sort="js-lists-values-phone" style="width: 150px;">Contact</th>
+                  <th class="sort" data-sort="js-lists-values-appointment" style="width: 37px;">Created</th>
+                  <th class="sort" data-sort="js-lists-values-wait" style="width: 120px;">Time</th>
+                  <th style="width: 24px;"></th>
+                </tr>
+              </thead>
+              <tbody class="list" data-toggle="dragula" data-dragula-moves="js-dragula-handle">
+                {% set items = [{
+                  avatar: 'assets/images/avatar/green.svg',
+                  name: 'Connie Smith',
+                  gender: 'Female, 45 yr',
+                  phone: '202-555-0140',
+                  appointment: '04:10 PM',
+                  wait: '30 mins',
+                  vitals: true
+                }, {
+                  avatar: 'assets/images/256_daniel-gaffey-1060698-unsplash.jpg',
+                  name: 'John Connor',
+                  gender: 'Male, 25 yr',
+                  phone: '202-555-0121',
+                  appointment: '03:20 PM',
+                  wait: '40 mins',
+                  vitals: true
+                }, {
+                  avatar: 'assets/images/256_rsz_1andy-lee-642320-unsplash.jpg',
+                  name: 'Jenell D. Matney',
+                  gender: 'Male, 40 yr',
+                  phone: '202-555-0106',
+                  appointment: '02:10 PM'
+                }, {
+                  avatar: 'assets/images/256_joao-silas-636453-unsplash.jpg',
+                  name: 'Sherri J. Cardenas',
+                  gender: 'Female, 35 yr',
+                  phone: '202-555-0197',
+                  appointment: '01:10 PM'
+                }, {
+                  avatar: 'assets/images/256_jeremy-banks-798787-unsplash.jpg',
+                  name: 'Joseph S. Ferland',
+                  gender: 'Male, 22 yr',
+                  phone: '202-555-0136',
+                  appointment: '12:00 PM'
+                }] %}
+                {% set seq = cycler('warning', 'primary') %}
+                {% for item in items %}
+                <tr>
+                  <td class="text-muted"><i class="material-icons js-dragula-handle" style="cursor: move;">drag_handle</i></td>
+                  <td>
+                    <span class="badge d-block badge-soft-{{ seq.next() }}">{{ loop.index }}</span>
+                  </td>
+                  <td>
+                    <div class="media align-items-center">
+                      <div class="avatar avatar-xs mr-2">
+                        <img src="{{ item.avatar }}" alt="Avatar" class="avatar-img rounded-circle">
+                      </div>
+                      <div class="media-body d-flex flex-column">
+                        <strong class="js-lists-values-name">{{ item.name }}</strong>
+                        <small class="text-muted">{{ item.gender }}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-muted">
+                    <small class="js-lists-values-phone">{{ item.phone }}</small>
+                  </td>
+                  <td class="text-muted">
+                    <small class="js-lists-values-appointment">{{ item.appointment }}</small>
+                  </td>
+                  <td class="js-lists-values-wait">
+                    {% if item.wait %}
+                    <span class="badge d-block badge-soft-danger">{{ item.wait }}</span>
+                    {% else %}
+                    <span class="badge d-block badge-soft-info">Not Arrived</span>
+                    {% endif %}
+                  </td>
+                  
+                  <td><a href="" class="text-muted"><i class="material-icons">more_vert</i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="card-body text-right">
+            15 <span class="text-muted">of 1,430</span> <a href="#" class="text-muted-light"><i class="material-icons ml-1">arrow_forward</i></a>
+          </div>
+
+        </div>
+
+        <div class="tab-pane fade" id="tab-wait-list">
+          
+          <div 
+            class="table-responsive border-bottom" 
+            data-toggle="lists" 
+            data-lists-values='["js-lists-values-name", "js-lists-values-phone", "js-lists-values-appointment", "js-lists-values-wait"]'>
+            <table class="table mb-0 thead-border-top-0">
+              <thead>
+                <tr>
+                  <th style="width: 24px;"></th>
+                  <th style="width: 24px;"></th>
+                  <th class="sort" data-sort="js-lists-values-name">Patient</th>
+                  <th class="sort" data-sort="js-lists-values-phone" style="width: 150px;">Contact</th>
+                  <th class="sort" data-sort="js-lists-values-appointment" style="width: 37px;">Created</th>
+                  <th class="sort" data-sort="js-lists-values-wait" style="width: 120px;">Time</th>
+                  <th style="width: 24px;"></th>
+                </tr>
+              </thead>
+              <tbody class="list" data-toggle="dragula" data-dragula-moves="js-dragula-handle">
+                {% set items = [{
+                  avatar: 'assets/images/256_luke-porter-261779-unsplash.jpg',
+                  name: 'Michael Smith',
+                  gender: 'Male, 32 yr',
+                  phone: '202-555-0135',
+                  appointment: '05:10 PM',
+                  wait: '56 mins',
+                  vitals: true
+                }, {
+                  avatar: 'assets/images/avatar/green.svg',
+                  name: 'Connie Smith',
+                  gender: 'Female, 45 yr',
+                  phone: '202-555-0140',
+                  appointment: '04:10 PM',
+                  wait: '30 mins',
+                  vitals: true
+                }, {
+                  avatar: 'assets/images/256_daniel-gaffey-1060698-unsplash.jpg',
+                  name: 'John Connor',
+                  gender: 'Male, 25 yr',
+                  phone: '202-555-0121',
+                  appointment: '03:20 PM',
+                  wait: '40 mins',
+                  vitals: true
+                }] %}
+                {% set seq = cycler('warning', 'primary') %}
+                {% for item in items %}
+                <tr>
+                  <td class="text-muted"><i class="material-icons js-dragula-handle" style="cursor: move;">drag_handle</i></td>
+                  <td>
+                    <span class="badge d-block badge-soft-{{ seq.next() }}">{{ loop.index }}</span>
+                  </td>
+                  <td>
+                    <div class="media align-items-center">
+                      <div class="avatar avatar-xs mr-2">
+                        <img src="{{ item.avatar }}" alt="Avatar" class="avatar-img rounded-circle">
+                      </div>
+                      <div class="media-body d-flex flex-column">
+                        <strong class="js-lists-values-name">{{ item.name }}</strong>
+                        <small class="text-muted">{{ item.gender }}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-muted">
+                    <small class="js-lists-values-phone">{{ item.phone }}</small>
+                  </td>
+                  <td class="text-muted">
+                    <small class="js-lists-values-appointment">{{ item.appointment }}</small>
+                  </td>
+                  <td class="js-lists-values-wait">
+                    {% if item.wait %}
+                    <span class="badge d-block badge-soft-danger">{{ item.wait }}</span>
+                    {% else %}
+                    <span class="badge d-block badge-soft-info">Not Arrived</span>
+                    {% endif %}
+                  </td>
+                  
+                  <td><a href="" class="text-muted"><i class="material-icons">more_vert</i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="card-body text-right">
+            15 <span class="text-muted">of 1,430</span> <a href="#" class="text-muted-light"><i class="material-icons ml-1">arrow_forward</i></a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

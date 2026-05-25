@@ -1,0 +1,26 @@
+@import '../../../src/sass/app';
+@import '../../../src/sass/vendor-material-icons';
+
+code.highlight {
+  color: #ffffff;
+}
+code.django .hljs-template-tag {
+  color: $warning;
+}
+.lead {
+  line-height: 1.556;
+}
+.docs-next {
+  box-shadow: 0 5px 15px 0 hsla(0,0%,89%,.5);
+}
+.measure-paragraph-max {
+  max-width: 536px;
+}
+.measure-lead-max {
+  max-width: 616px;
+}
+
+// fix children with position sticky
+.mdk-drawer-layout {
+  overflow: initial;
+}

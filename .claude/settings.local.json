@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"c:\\\\xampp\\\\htdocs\\\\SISTEMAS\\\\INTRANET 2.0\" -Recurse -Force)",
+      "Bash(Select-Object -Property FullName, PSIsContainer)",
+      "Bash(Sort-Object FullName)",
+      "Bash(Select-String -Pattern \"\\\\.\\(jpg|jpeg|png|webp|gif\\)$\" -i)",
+      "Bash(curl -L \"https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js\" -o \"c:/xampp/htdocs/SISTEMAS/INTRANET 2.0/fullcalendar.min.js\" --max-time 30)",
+      "Bash(dir \"c:\\\\xampp\\\\htdocs\\\\SISTEMAS\\\\INTRANET 2.0\")"
+    ]
+  }
+}

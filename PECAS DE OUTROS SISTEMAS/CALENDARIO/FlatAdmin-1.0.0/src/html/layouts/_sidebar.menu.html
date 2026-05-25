@@ -1,0 +1,56 @@
+<ul class="sidebar-menu flex">
+  <li class="sidebar-menu-item{% if slug === 'dashboard' %} active{% endif %}">
+    <a class="sidebar-menu-button" href="{{ home_url }}">
+      <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">dvr</i>
+      <span class="sidebar-menu-text">Dashboard</span>
+    </a>
+  </li>
+
+  <li class="sidebar-menu-item{% if pages_menu %} active open{% endif %}">
+    <a class="sidebar-menu-button" data-toggle="collapse" href="#pages_menu">
+      <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">description</i>
+      <span class="sidebar-menu-text">Pages</span>
+      <span class="badge badge-warning rounded-circle badge-notifications ml-auto" style="padding: .1875rem .375rem;">8</span>
+      <span class="sidebar-menu-toggle-icon"></span>
+    </a>
+    <ul class="sidebar-submenu collapse{% if pages_menu %} show {% endif %}" id="pages_menu">
+      {% include 'layouts/_sidebar.menu.pages.html' %}
+    </ul>
+  </li>
+
+  <li class="sidebar-menu-item{% if components_menu %} active open{% endif %}">
+    <a class="sidebar-menu-button" data-toggle="collapse" href="#components_menu">
+      <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">developer_board</i>
+      <span class="sidebar-menu-text">UI Elements</span>
+      <span class="ml-auto sidebar-menu-toggle-icon"></span>
+    </a>
+    <ul class="sidebar-submenu collapse{% if components_menu %} show {% endif %}" id="components_menu">
+      {% include 'layouts/_sidebar.menu.components.html' %}
+    </ul>
+  </li>
+
+  <li class="sidebar-menu-item{% if slug === 'ui-charts' %} active{% endif %}">
+    <a class="sidebar-menu-button" href="{{ prefix or '' }}ui-charts.html">
+      <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">donut_small</i>
+      <span class="sidebar-menu-text">Charts</span>
+    </a>
+  </li>
+  <li class="sidebar-menu-item{% if slug === 'ui-forms' %} active{% endif %}">
+    <a class="sidebar-menu-button" href="{{ prefix or '' }}ui-forms.html">
+      <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">text_format</i>
+      <span class="sidebar-menu-text">Forms</span>
+    </a>
+  </li>
+  <li class="sidebar-menu-item{% if slug === 'fullcalendar' %} active{% endif %}">
+    <a class="sidebar-menu-button" href="{{ prefix or '' }}fullcalendar.html">
+      <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">date_range</i>
+      <span class="sidebar-menu-text">Calendar</span>
+    </a>
+  </li>
+  <li class="sidebar-menu-item{% if slug === 'ui-vector-maps' %} active{% endif %}">
+    <a class="sidebar-menu-button" href="{{ prefix or '' }}ui-vector-maps.html">
+      <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">location_on</i>
+      <span class="sidebar-menu-text">Vector Maps</span>
+    </a>
+  </li>
+</ul>

@@ -1,0 +1,97 @@
+{% import 'components/hljs.html' as hljs %}
+{% import 'components/next.html' as next %}
+
+<div class="{{ containerClass }} page__container">
+  <div class="row">
+    <div class="col-lg-8">
+
+      <p class="measure-paragraph-max">Create a <code>webpack.mix.js</code> file at the root of your project:</p>
+      <div class="card card-footer bg-dark measure-lead-max">
+        {% call hljs.component(type="js") -%}
+          require('theme-mix')
+        {%- endcall %}
+      </div>
+
+      <p class="measure-paragraph-max">Update <code>package.json</code> with the workflow:</p>
+      <div class="card card-footer bg-dark measure-lead-max">
+{% call hljs.component(type="json") -%}
+"scripts": {
+  "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+  "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+  "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+  "serve": "lite-server -c node_modules/theme-mix/bs-config.json ./dist",
+  "deploy": "surge --project ./dist --domain flat-v1.0.0.dev.frontendmatter.com",
+  "html-validator-server": "java -cp node_modules/vnu-jar/build/dist/vnu.jar nu.validator.servlet.Main 8888"
+},
+{%- endcall %}
+      </div>
+
+      <h4>Options</h4>
+
+      <p class="measure-paragraph-max">Create a <code>theme-mix.yaml</code> file at the root of your project. These are the default configuration options, except <code>copy</code> which by default is an empty list.</p>
+
+      <div class="card card-footer bg-dark measure-lead-max">
+{% call hljs.component(type="yaml") -%}
+runTasks:
+  clean: true
+  js: true
+  copy: true
+  sass: true
+  html: true
+enableCssThemes: false
+enableCssRTL: true
+copyCwd: node_modules
+copyDest: dist/assets/vendor
+copy:
+  - ion-rangeslider/js/ion.rangeSlider.min.js
+  - jquery/dist/jquery.min.js
+  - bootstrap/dist/js/bootstrap.min.*
+  - popper.js/dist/umd/popper.min.*
+  - dom-factory/dist/*
+  - material-design-kit/dist/material-design-kit.js
+  - simplebar/dist/simplebar.min.{js,css}: dist/assets/vendor
+  - material-design-icons-iconfont/dist/fonts/*.{eot,ttf,woff,woff2,ijmap}: dist/assets/fonts/material-icons
+  - '@fortawesome/fontawesome-free/webfonts/*': dist/assets/fonts/fontawesome-free
+  - vue/dist/vue.min.js
+  - toastr/build/toastr.min.*
+  - chart.js/dist/Chart.min.js
+  - moment/min/moment.min.js
+  - moment-range/dist/moment-range.js
+  - flatpickr/dist/flatpickr.min.{js,css}: dist/assets/vendor/flatpickr
+  - flatpickr/dist/themes/airbnb.css: dist/assets/vendor/flatpickr
+  - daterangepicker/daterangepicker.{js,css}
+  - jquery-mask-plugin/dist/jquery.mask.min.js
+  - quill/dist/quill.min.js
+  - dropzone/dist/min/dropzone.min.js
+  - dragula/dist/dragula.min.{js,css}: dist/assets/vendor/dragula
+  - select2/dist/js/select2.min.js: dist/assets/vendor/select2
+  - select2/dist/css/select2.min.css: dist/assets/vendor/select2
+  - list.js/dist/list.min.js
+  - jqvmap/dist/jquery.vmap.min.js: dist/assets/vendor/jqvmap
+  - jqvmap/dist/jqvmap.min.css: dist/assets/vendor/jqvmap
+  - jqvmap/dist/maps/*.js: dist/assets/vendor/jqvmap/maps
+  - jqvmap/dist/maps/continents/*.js: dist/assets/vendor/jqvmap/maps/continents
+  - fullcalendar/dist/fullcalendar.min.{js,css}: dist/assets/vendor/fullcalendar
+  - jquery-ui-dist/jquery-ui.min.js
+  - snazzy-info-window/dist/*.min.{js,css}: dist/assets/vendor/snazzy-info-window
+clean:
+  - dist/**/*.html
+  - dist/assets/{css,fonts,js,vendor}
+sassSrc: src/sass/*.scss
+cssDest: dist/assets/css
+jsSrc: src/js/**/**.js
+jsDest: dist/assets/js
+htmlDest: dist/[path][name].html
+htmllint: false
+laravelMixOptions:
+  processCssUrls: false
+{%- endcall %}
+      </div>
+
+    </div>
+    <div class="col-lg-4 position-sticky" style="top: 64px;">
+      <div class="mb-3">{{ next.component(title='Build Project', to='build.html') }}</div>
+      {{ next.component(title='Installation', to='installation.html', prev=true) }}
+    </div>
+  </div>
+</div>

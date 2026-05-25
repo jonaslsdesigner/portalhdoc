@@ -1,0 +1,10 @@
+node_modules/
+dist/**/*.html
+dist/assets/css
+dist/assets/js
+dist/assets/vendor
+dist/assets/fonts
+/mix.js
+/mix-manifest.json
+/temp
+.htmllint

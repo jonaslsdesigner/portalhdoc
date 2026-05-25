@@ -1,0 +1,40 @@
+<div class="app-properties-container{% if 'fixed' in prefix %} {{ containerClass }} page__container{% endif %}">
+  <div class="row h-100 m-0">
+    <div class="col-lg-9 py-grid d-flex flex-column h-100" data-simplebar>
+      <div class="{{ containerClass }} page__container">
+        {% include "pages/_" + slug + ".partial.html" %}
+      </div>
+    </div>
+    <div class="col-lg-3 bg-white border-left py-3" data-simplebar>
+      <div class="form-group">
+        <label for="filter_name" class="text-label">Search</label>
+        <input id="filter_name" type="text" class="form-control" placeholder="Enter keyword">
+      </div>
+
+      <div class="form-group">
+        <label for="filter_buckets" class="text-label">Buckets</label><br>
+        <select id="filter_buckets" class="custom-select">
+          <option value="all">Any</option>
+          <option value="1">Deployed</option>
+          <option value="2">Concept</option>
+          <option value="3">Wireframe</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="filter_assigned" class="text-label">Assigned To</label><br>
+        <select id="filter_assigned" class="custom-select">
+          <option value="all">Any</option>
+          <option value="1">Adrian D.</option>
+          <option value="2">Michael S.</option>
+          <option value="3">John L.</option>
+        </select>
+      </div>
+    
+      <div class="form-group">
+        <label for="filter_date" class="text-label">Daterange</label>
+        <input id="filter_date" type="text" class="form-control" placeholder="Select date ..." value="13/03/2018 to 20/03/2018" data-toggle="flatpickr" data-flatpickr-mode="range" data-flatpickr-alt-format="d/m/Y" data-flatpickr-date-format="d/m/Y">
+      </div>
+    </div>
+  </div>
+</div>
