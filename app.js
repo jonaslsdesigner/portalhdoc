@@ -3,6 +3,8 @@
 const body = document.body;
 const topbar = document.getElementById('topbar');
 
+let _openCatModalFn = null;
+
 function isMobileViewport() {
   return window.innerWidth < 768;
 }
@@ -87,10 +89,25 @@ function initFullCalendar() {
   let _pendingSelect = null;
   let _editEvent     = null;
 
+  function syncCategorySelect(selectedColor) {
+    catIn.innerHTML = '';
+    document.querySelector('.cal-chips')?.querySelectorAll('.cal-chip').forEach(chip => {
+      const chipColor = chip.style.getPropertyValue('--chip-color').trim();
+      const chipName  = chip.textContent.trim();
+      if (!chipColor) return;
+      const opt = document.createElement('option');
+      opt.value       = chipColor;
+      opt.textContent = chipName;
+      catIn.appendChild(opt);
+    });
+    catIn.value = selectedColor;
+    if (!catIn.value && catIn.options.length > 0) catIn.selectedIndex = 0;
+  }
+
   function openModal({ title = '', date = '', color = '#2389d7', mode = 'add' } = {}) {
+    syncCategorySelect(color);
     titleIn.value = title;
     dateIn.value  = date;
-    catIn.value   = color in { '#2389d7': 1, '#e74c3c': 1, '#5a6a7e': 1 } ? color : '#2389d7';
     modalTtl.textContent = mode === 'edit' ? 'Editar Evento' : 'Novo Evento';
     delBtn.style.display  = mode === 'edit' ? 'flex' : 'none';
     overlay.classList.add('is-open');
@@ -111,8 +128,11 @@ function initFullCalendar() {
     const color = catIn.value;
 
     if (_editEvent) {
-      _editEvent.title = title;
-      _editEvent.color = color;
+      _editEvent.title     = title;
+      _editEvent.color     = color;
+      _editEvent.textColor = '';
+      _editEvent.borderColor = '';
+      _editEvent.backgroundColor = '';
       calEl.fullCalendar('updateEvent', _editEvent);
     } else if (_pendingSelect) {
       calEl.fullCalendar('renderEvent', {
@@ -202,8 +222,11 @@ function initFullCalendar() {
       });
     },
     viewRender(view) {
+      const title = view.title.toUpperCase();
       const el = document.getElementById('calMeetingMonth');
-      if (el) el.textContent = view.title.toUpperCase();
+      if (el) el.textContent = title;
+      const elModal = document.getElementById('calEditModalMonth');
+      if (elModal) elModal.textContent = title;
       requestAnimationFrame(alignCalendarPanel);
     },
   });
@@ -214,35 +237,169 @@ function initFullCalendar() {
     openModal({ date: moment().format('YYYY-MM-DD'), mode: 'add' });
   });
 
-  const calWrapper = document.querySelector('.cal-card-wrapper');
-  const editToggle = document.getElementById('calEditToggle');
-  let editMode = false;
+  const calWrapper       = document.querySelector('.cal-card-wrapper');
+  const editToggle       = document.getElementById('calEditToggle');
+  const editModalOverlay = document.getElementById('calEditModalOverlay');
+  const editModalClose   = document.getElementById('calEditModalClose');
+  const editModalClose2  = document.getElementById('calEditModalClose2');
+  const editModalConfirm = document.getElementById('calEditModalConfirm');
+  const calNewBtnModal   = document.getElementById('calNewBtnModal');
+  const mainChipsEl      = document.querySelector('.cal-chips');
 
-  editToggle?.addEventListener('click', () => {
-    editMode = !editMode;
-    calWrapper.classList.toggle('edit-mode', editMode);
-    editToggle.classList.toggle('is-active', editMode);
-    editToggle.title = editMode ? 'Sair da edição' : 'Editar calendário';
-    calEl.fullCalendar('option', 'editable', editMode);
-    calEl.fullCalendar('option', 'selectable', editMode);
+  let _eventsSnapshot  = null;
+  let _chipsSnapshot   = null;
+  let _calOrigParent   = null;
+  let _calNextSibling  = null;
+
+  function syncModalChips() {
+    const modalChipsEl = document.getElementById('calChipsInModal');
+    const catOv = document.getElementById('calCatModalOverlay');
+    if (!modalChipsEl || !mainChipsEl) return;
+    modalChipsEl.innerHTML = mainChipsEl.innerHTML;
+    modalChipsEl.querySelectorAll('.cal-chip').forEach((chip, i) => {
+      chip.style.cursor = 'pointer';
+      chip.addEventListener('click', () => {
+        const mainChip = mainChipsEl.querySelectorAll('.cal-chip')[i];
+        if (mainChip && _openCatModalFn) _openCatModalFn(mainChip);
+      });
+    });
+  }
+
+  function moveCalendarToModal() {
+    const calDomEl = document.getElementById('fullCalendar');
+    const calSlot  = document.getElementById('calEditCalendarSlot');
+    if (!calDomEl || !calSlot) return;
+    _calOrigParent  = calDomEl.parentElement;
+    _calNextSibling = calDomEl.nextSibling;
+    calSlot.appendChild(calDomEl);
+    calEl.fullCalendar('render');
+  }
+
+  function restoreCalendarPosition() {
+    const calDomEl = document.getElementById('fullCalendar');
+    const calSlot  = document.getElementById('calEditCalendarSlot');
+    if (!calDomEl || !_calOrigParent) return;
+    if (_calNextSibling) _calOrigParent.insertBefore(calDomEl, _calNextSibling);
+    else _calOrigParent.appendChild(calDomEl);
+    calEl.fullCalendar('render');
+    _calOrigParent  = null;
+    _calNextSibling = null;
+  }
+
+  function openEditModal() {
+    _eventsSnapshot = calEl.fullCalendar('clientEvents').map(e => ({
+      title: e.title,
+      start: e.start.toISOString(),
+      end: e.end ? e.end.toISOString() : null,
+      allDay: e.allDay !== false,
+      color: e.color || null,
+      textColor: e.textColor || null,
+    }));
+    _chipsSnapshot = mainChipsEl ? mainChipsEl.innerHTML : '';
+    syncModalChips();
+    calEl.fullCalendar('option', 'editable', true);
+    calEl.fullCalendar('option', 'selectable', true);
+    calWrapper.classList.add('edit-mode');
+    editToggle.classList.add('is-active');
+    editModalOverlay.classList.add('is-open');
+    editModalOverlay.setAttribute('aria-hidden', 'false');
+    moveCalendarToModal();
+  }
+
+  function confirmEditModal() {
+    restoreCalendarPosition();
+    calEl.fullCalendar('option', 'editable', false);
+    calEl.fullCalendar('option', 'selectable', false);
+    calWrapper.classList.remove('edit-mode');
+    editToggle.classList.remove('is-active');
+    _eventsSnapshot = null;
+    _chipsSnapshot  = null;
+    editModalOverlay.classList.remove('is-open');
+    editModalOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  function cancelEditModal() {
+    restoreCalendarPosition();
+    if (_eventsSnapshot) {
+      calEl.fullCalendar('removeEvents');
+      _eventsSnapshot.forEach(e => {
+        const evt = { title: e.title, start: e.start, allDay: e.allDay };
+        if (e.end) evt.end = e.end;
+        if (e.color) evt.color = e.color;
+        if (e.textColor) evt.textColor = e.textColor;
+        calEl.fullCalendar('renderEvent', evt, true);
+      });
+    }
+    if (mainChipsEl && _chipsSnapshot !== null) {
+      mainChipsEl.innerHTML = _chipsSnapshot;
+      mainChipsEl._attachChipListeners?.();
+    }
+    calEl.fullCalendar('option', 'editable', false);
+    calEl.fullCalendar('option', 'selectable', false);
+    calWrapper.classList.remove('edit-mode');
+    editToggle.classList.remove('is-active');
+    _eventsSnapshot = null;
+    _chipsSnapshot  = null;
+    editModalOverlay.classList.remove('is-open');
+    editModalOverlay.setAttribute('aria-hidden', 'true');
+  }
+
+  editToggle?.addEventListener('click', openEditModal);
+  editModalClose?.addEventListener('click', cancelEditModal);
+  editModalClose2?.addEventListener('click', cancelEditModal);
+  editModalConfirm?.addEventListener('click', confirmEditModal);
+  editModalOverlay?.addEventListener('click', e => { if (e.target === editModalOverlay) cancelEditModal(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && editModalOverlay?.classList.contains('is-open')) cancelEditModal();
+  });
+
+  calNewBtnModal?.addEventListener('click', () => {
+    _pendingSelect = null;
+    _editEvent = null;
+    openModal({ date: moment().format('YYYY-MM-DD'), mode: 'add' });
+  });
+
+  editModalOverlay._syncModalChips = syncModalChips;
+
+  document.addEventListener('cal-category-delete', (e) => {
+    const deletedColor = e.detail.color;
+    calEl.fullCalendar('clientEvents').forEach(ev => {
+      if (ev.color === deletedColor || ev.textColor === deletedColor) {
+        ev.color     = '#dde4ed';
+        ev.textColor = '#8a9db5';
+        calEl.fullCalendar('updateEvent', ev);
+      }
+    });
+  });
+
+  document.addEventListener('cal-category-update', (e) => {
+    const { oldColor, newColor } = e.detail;
+    calEl.fullCalendar('clientEvents').forEach(ev => {
+      let changed = false;
+      if (ev.color === oldColor)     { ev.color     = newColor; changed = true; }
+      if (ev.textColor === oldColor) { ev.textColor = newColor; changed = true; }
+      if (changed) calEl.fullCalendar('updateEvent', ev);
+    });
   });
 }
 
 function initFeatureCarousels() {
   document.querySelectorAll('.feature-carousel').forEach((carousel) => {
     const track = carousel.querySelector('.feature-track');
-    const slides = Array.from(carousel.querySelectorAll('.person-card'));
     const prevBtn = carousel.querySelector('.feature-arrow-prev');
     const nextBtn = carousel.querySelector('.feature-arrow-next');
     const dotsWrap = carousel.querySelector('.feature-dots');
 
-    if (!track || !prevBtn || !nextBtn || !dotsWrap || slides.length === 0) return;
+    if (!track || !prevBtn || !nextBtn || !dotsWrap) return;
 
     let index = 0;
 
-    function renderDots() {
-      dotsWrap.innerHTML = '';
+    function getSlides() {
+      return Array.from(carousel.querySelectorAll('.person-card'));
+    }
 
+    function renderDots(slides) {
+      dotsWrap.innerHTML = '';
       slides.forEach((_, dotIndex) => {
         const dot = document.createElement('button');
         dot.type = 'button';
@@ -257,23 +414,57 @@ function initFeatureCarousels() {
     }
 
     function updateCarousel() {
+      const slides = getSlides();
+      if (slides.length === 0) {
+        track.style.transform = 'translateX(0)';
+        dotsWrap.innerHTML = '';
+        return;
+      }
+      if (index >= slides.length) index = slides.length - 1;
       track.style.transform = `translateX(-${index * 100}%)`;
       prevBtn.disabled = false;
       nextBtn.disabled = false;
-      renderDots();
+      renderDots(slides);
+    }
+
+    let autoId = null;
+
+    function startAutoplay() {
+      autoId = window.setInterval(() => {
+        const slides = getSlides();
+        if (slides.length === 0) return;
+        index = (index + 1) % slides.length;
+        updateCarousel();
+      }, 5000);
+    }
+
+    function restartAutoplay() {
+      window.clearInterval(autoId);
+      startAutoplay();
     }
 
     prevBtn.addEventListener('click', () => {
+      const slides = getSlides();
+      if (slides.length === 0) return;
       index = (index - 1 + slides.length) % slides.length;
       updateCarousel();
+      restartAutoplay();
     });
 
     nextBtn.addEventListener('click', () => {
+      const slides = getSlides();
+      if (slides.length === 0) return;
       index = (index + 1) % slides.length;
       updateCarousel();
+      restartAutoplay();
     });
 
+    carousel.addEventListener('mouseenter', () => window.clearInterval(autoId));
+    carousel.addEventListener('mouseleave', restartAutoplay);
+
+    carousel._refreshCarousel = updateCarousel;
     updateCarousel();
+    startAutoplay();
   });
 }
 
@@ -386,11 +577,13 @@ function initMediaManager() {
   const fileInput  = document.getElementById('mediaFileInput');
   const closeBtn   = document.getElementById('mediaModalClose');
   const closeBtn2  = document.getElementById('mediaModalClose2');
+  const confirmBtn = document.getElementById('mediaModalConfirm');
 
   if (!overlay) return;
 
-  let _track = null;
+  let _track    = null;
   let _cardClass = '';
+  let _snapshot  = null;
 
   function openModal(carouselKey) {
     const carousel = document.querySelector(`.feature-carousel[data-carousel="${carouselKey}"]`);
@@ -398,12 +591,27 @@ function initMediaManager() {
     _track     = carousel.querySelector('.feature-track');
     _cardClass = carouselKey === 'birthday' ? 'person-card-birthday' : 'person-card-tenure';
     titleEl.textContent = carouselKey === 'birthday' ? 'Aniversariantes' : 'Tempo de Empresa';
+    _snapshot = Array.from(_track.children).map(child => child.cloneNode(true));
     renderGrid();
     overlay.classList.add('is-open');
     overlay.setAttribute('aria-hidden', 'false');
   }
 
-  function closeModal() {
+  function confirmModal() {
+    _snapshot = null;
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    _track = null;
+  }
+
+  function cancelModal() {
+    if (_track && _snapshot) {
+      _track.innerHTML = '';
+      _snapshot.forEach(node => _track.appendChild(node));
+      const featureCarousel = _track.closest('.feature-carousel');
+      if (featureCarousel && featureCarousel._refreshCarousel) featureCarousel._refreshCarousel();
+    }
+    _snapshot = null;
     overlay.classList.remove('is-open');
     overlay.setAttribute('aria-hidden', 'true');
     _track = null;
@@ -457,8 +665,9 @@ function initMediaManager() {
     const thumb = document.createElement('div');
     thumb.className = 'media-thumb';
     const i = document.createElement('img');
-    i.src = img ? img.src : card.querySelector('img').src;
-    i.alt = img ? img.alt : '';
+    const srcImg = img || card.querySelector('img');
+    i.src = srcImg.getAttribute('src') || srcImg.src;
+    i.alt = srcImg.alt || '';
     const del = document.createElement('button');
     del.className = 'media-thumb-del';
     del.title = 'Remover';
@@ -466,6 +675,10 @@ function initMediaManager() {
     del.addEventListener('click', () => {
       (img ? img.closest('.person-card') : card).remove();
       thumb.remove();
+      if (_track) {
+        const featureCarousel = _track.closest('.feature-carousel');
+        if (featureCarousel && featureCarousel._refreshCarousel) featureCarousel._refreshCarousel();
+      }
     });
     thumb.appendChild(i);
     thumb.appendChild(del);
@@ -493,11 +706,12 @@ function initMediaManager() {
     fileInput.value = '';
   });
 
-  closeBtn.addEventListener('click', closeModal);
-  closeBtn2.addEventListener('click', closeModal);
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  closeBtn.addEventListener('click', cancelModal);
+  closeBtn2.addEventListener('click', cancelModal);
+  confirmBtn.addEventListener('click', confirmModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) cancelModal(); });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal();
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) cancelModal();
   });
 
   document.querySelectorAll('.feature-edit-btn').forEach(btn => {
@@ -516,6 +730,7 @@ function alignCalendarPanel() {
 
 function initCategoryEditor() {
   const catOverlay  = document.getElementById('calCatModalOverlay');
+  const mainChipsEl = document.querySelector('.cal-chips');
   const catNameIn   = document.getElementById('calCatName');
   const colorGrid   = document.getElementById('calColorGrid');
   const catSaveBtn   = document.getElementById('calCatModalSave');
@@ -563,8 +778,13 @@ function initCategoryEditor() {
     if (!name) { catNameIn.focus(); return; }
 
     if (_chip) {
-      _chip.style.setProperty('--chip-color', _color);
+      const oldColor = _chip.style.getPropertyValue('--chip-color').trim();
+      const newColor = _color;
+      _chip.style.setProperty('--chip-color', newColor);
       _chip.textContent = name;
+      if (oldColor && oldColor !== newColor) {
+        document.dispatchEvent(new CustomEvent('cal-category-update', { detail: { oldColor, newColor } }));
+      }
     } else {
       const newChip = document.createElement('div');
       newChip.className = 'cal-chip';
@@ -572,9 +792,10 @@ function initCategoryEditor() {
       newChip.textContent = name;
       newChip.style.cursor = 'pointer';
       newChip.addEventListener('click', () => openCatModal(newChip));
-      document.querySelector('.cal-chips').appendChild(newChip);
+      mainChipsEl.appendChild(newChip);
     }
     closeCatModal();
+    document.getElementById('calEditModalOverlay')?._syncModalChips?.();
   });
 
   catCloseBtn.addEventListener('click', closeCatModal);
@@ -603,9 +824,43 @@ function initCategoryEditor() {
   });
 
   catDelBtn.addEventListener('click', () => {
-    if (_chip) _chip.remove();
-    closeCatModal();
+    if (_chip) {
+      const deletedColor = _color;
+      _chip.remove();
+      closeCatModal();
+      document.getElementById('calEditModalOverlay')?._syncModalChips?.();
+      if (deletedColor) {
+        document.dispatchEvent(new CustomEvent('cal-category-delete', { detail: { color: deletedColor } }));
+      }
+    } else {
+      closeCatModal();
+    }
   });
+
+  document.getElementById('calAddCatBtnModal')?.addEventListener('click', () => {
+    _chip = null;
+    _color = '#2389d7';
+    catNameIn.value = '';
+    colorGrid.querySelectorAll('.cal-color-swatch').forEach(sw => {
+      sw.classList.toggle('is-selected', sw.dataset.color === _color);
+    });
+    catDelBtn.style.display = 'none';
+    catOverlay.classList.add('is-open');
+    catOverlay.setAttribute('aria-hidden', 'false');
+    setTimeout(() => catNameIn.focus(), 50);
+  });
+
+  catOverlay._openForChip = openCatModal;
+  _openCatModalFn = openCatModal;
+
+  if (mainChipsEl) {
+    mainChipsEl._attachChipListeners = () => {
+      mainChipsEl.querySelectorAll('.cal-chip').forEach(chip => {
+        chip.style.cursor = 'pointer';
+        chip.addEventListener('click', () => openCatModal(chip));
+      });
+    };
+  }
 }
 
 initHeroCarousel();

@@ -23,7 +23,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         </button>
         <div class="user-avatar" id="userAvatar">
-          <img src="https://ui-avatars.com/api/?name=Jonas+Lima&background=0B132B&color=fff&size=64&font-size=0.38" alt="Jonas Lima" />
+          <img src="ARQUIVOS/FOTOS%20PERFIL/JONAS%20PERFIL.png" alt="Jonas Lima" />
           <span class="user-name">Jonas Lima</span>
           <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
           <div class="user-dropdown">
@@ -148,13 +148,40 @@
               <div class="feature-viewport">
                 <div class="feature-track">
                   <article class="person-card person-card-birthday">
-                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/4.png" alt="Aniversariante" /></div>
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/4.png" alt="Francisco Gilberto" /></div>
                   </article>
                   <article class="person-card person-card-birthday">
-                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/5.png" alt="Aniversariante" /></div>
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/5.png" alt="Michelle Aline" /></div>
                   </article>
                   <article class="person-card person-card-birthday">
-                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/7.png" alt="Aniversariante" /></div>
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/7.png" alt="Kassia Simões" /></div>
+                  </article>
+                  <article class="person-card person-card-birthday">
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/8.png" alt="Eliezer Vieira" /></div>
+                  </article>
+                  <article class="person-card person-card-birthday">
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/9.png" alt="Pedro Paulo" /></div>
+                  </article>
+                  <article class="person-card person-card-birthday">
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/10.png" alt="Germano Regadas" /></div>
+                  </article>
+                  <article class="person-card person-card-birthday">
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/11.png" alt="Raylsson Almeida" /></div>
+                  </article>
+                  <article class="person-card person-card-birthday">
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/12.png" alt="Lúcio Domingos" /></div>
+                  </article>
+                  <article class="person-card person-card-birthday">
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/13.png" alt="Cecilia Guilhon" /></div>
+                  </article>
+                  <article class="person-card person-card-birthday">
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/14.png" alt="Maysa Xavier" /></div>
+                  </article>
+                  <article class="person-card person-card-birthday">
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/15.png" alt="Andressa Mota" /></div>
+                  </article>
+                  <article class="person-card person-card-birthday">
+                    <div class="person-card-photo"><img src="ARQUIVOS/ANIVERSARIANTES%20DO%20M%C3%8AS/16.png" alt="Juninho" /></div>
                   </article>
                 </div>
               </div>
@@ -238,7 +265,6 @@
                 </div>
                 <div>
                   <h2 class="feature-title">Eventos</h2>
-                  <div class="cal-meeting-month">Gerencie aqui</div>
                 </div>
               </header>
             </div>
@@ -247,7 +273,7 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
                 Novo Evento
               </button>
-              <p class="cal-panel-hint">Clique em um dia ou arraste para criar eventos.</p>
+              <p class="cal-panel-hint">Clique em uma data ou no botão acima para adicionar atividades. Crie categorias para organizar os eventos.</p>
               <div class="cal-chips-header">
                 <span class="cal-chips-label">Categorias</span>
                 <button class="cal-add-cat-btn" id="calAddCatBtn" title="Nova categoria">
@@ -375,23 +401,27 @@
 
   <!-- Modal: Editar Calendário -->
   <div class="cal-modal-overlay" id="calEditModalOverlay" aria-hidden="true">
-    <div class="cal-modal" role="dialog" aria-modal="true">
+    <div class="cal-modal cal-edit-modal-wide" role="dialog" aria-modal="true">
       <div class="cal-modal-header">
         <div class="cal-modal-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
         </div>
-        <h3 class="cal-modal-title">Editar Calendário</h3>
+        <div class="cal-modal-title-group">
+          <h3 class="cal-modal-title">Editar Calendário</h3>
+          <span class="cal-edit-modal-month" id="calEditModalMonth">MAIO 2026</span>
+        </div>
         <button class="cal-modal-close" id="calEditModalClose" aria-label="Fechar">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
-      <div class="cal-modal-body">
-        <button class="cal-new-btn" id="calNewBtnModal" style="display:flex">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          Novo Evento
-        </button>
-        <p class="cal-panel-hint" style="display:block">Clique em um dia no calendário ou arraste para criar eventos.</p>
-        <div class="cal-modal-field" style="gap:10px">
+      <div class="cal-edit-modal-body">
+        <div class="cal-edit-modal-calendar" id="calEditCalendarSlot"></div>
+        <div class="cal-edit-modal-panel">
+          <button class="cal-new-btn" id="calNewBtnModal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            Novo Evento
+          </button>
+          <p class="cal-panel-hint">Clique em uma data ou no botão acima para adicionar atividades. Crie categorias para organizar os eventos.</p>
           <div class="cal-chips-header">
             <span class="cal-chips-label">Categorias</span>
             <button class="cal-add-cat-btn" id="calAddCatBtnModal" title="Nova categoria">
@@ -404,6 +434,7 @@
       <div class="cal-modal-footer">
         <div class="cal-modal-footer-right">
           <button class="cal-modal-btn-cancel" id="calEditModalClose2">Fechar</button>
+          <button class="cal-modal-btn-save" id="calEditModalConfirm">Confirmar</button>
         </div>
       </div>
     </div>
@@ -433,6 +464,7 @@
       <div class="cal-modal-footer">
         <div class="cal-modal-footer-right">
           <button class="cal-modal-btn-cancel" id="mediaModalClose2">Fechar</button>
+          <button class="cal-modal-btn-save" id="mediaModalConfirm">Confirmar</button>
         </div>
       </div>
     </div>
@@ -460,6 +492,7 @@
           <div class="cal-color-grid" id="calColorGrid">
             <button class="cal-color-swatch" data-color="#e74c3c" style="--sc:#e74c3c" title="Vermelho"></button>
             <button class="cal-color-swatch" data-color="#c0392b" style="--sc:#c0392b" title="Vermelho escuro"></button>
+            <button class="cal-color-swatch" data-color="#8b0000" style="--sc:#8b0000" title="Vinho"></button>
             <button class="cal-color-swatch" data-color="#2389d7" style="--sc:#2389d7" title="Azul"></button>
             <button class="cal-color-swatch" data-color="#1f3d78" style="--sc:#1f3d78" title="Azul marinho"></button>
             <button class="cal-color-swatch" data-color="#27ae60" style="--sc:#27ae60" title="Verde"></button>
@@ -507,11 +540,7 @@
         </div>
         <div class="cal-modal-field">
           <label class="cal-modal-label" for="calEventCategory">Categoria</label>
-          <select class="cal-modal-select" id="calEventCategory">
-            <option value="#2389d7">Grupo HDOC</option>
-            <option value="#e74c3c">COAPH</option>
-            <option value="#5a6a7e">Outros</option>
-          </select>
+          <select class="cal-modal-select" id="calEventCategory"></select>
         </div>
       </div>
       <div class="cal-modal-footer">
