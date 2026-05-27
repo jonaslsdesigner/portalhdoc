@@ -6,7 +6,11 @@
       "Bash(Sort-Object FullName)",
       "Bash(Select-String -Pattern \"\\\\.\\(jpg|jpeg|png|webp|gif\\)$\" -i)",
       "Bash(curl -L \"https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js\" -o \"c:/xampp/htdocs/SISTEMAS/INTRANET 2.0/fullcalendar.min.js\" --max-time 30)",
-      "Bash(dir \"c:\\\\xampp\\\\htdocs\\\\SISTEMAS\\\\INTRANET 2.0\")"
+      "Bash(dir \"c:\\\\xampp\\\\htdocs\\\\SISTEMAS\\\\INTRANET 2.0\")",
+      "Bash(Select-Object -Last 20)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
