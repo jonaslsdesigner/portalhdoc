@@ -20,7 +20,7 @@
   --radius: 18px;
   --topbar-h: 154px;
   --sidebar-w: 84px;
-  --sidebar-expanded: 264px;
+  --sidebar-expanded: 220px;
   --content-gutter: 16px;
   --nav-offset: 72px;
   --font-title: "Roboto", sans-serif;
@@ -369,12 +369,19 @@ button {
 }
 
 .dropdown-menu a {
-  display: block;
-  padding: 14px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
   border-radius: 10px;
   color: var(--blue-deep);
   font-size: 14px;
   font-weight: 500;
+}
+
+.dropdown-menu a svg {
+  flex-shrink: 0;
+  color: var(--blue-brand);
 }
 
 .dropdown-menu a:hover {
@@ -402,7 +409,7 @@ button {
   width: 100%;
   height: 76px;
   flex-shrink: 0;
-  padding: 0;
+  padding: 0 16px;
   background: var(--blue-brand);
   border: none;
   border-bottom: 1px solid rgba(255,255,255,0.15);
@@ -426,6 +433,16 @@ button {
   flex-shrink: 0;
 }
 
+.pin-label {
+  display: none;
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.9);
+}
+
 .pin-icon-collapse {
   display: none;
 }
@@ -437,6 +454,11 @@ button {
 
 .sidebar-pinned .pin-icon-collapse,
 .sidebar:hover .pin-icon-collapse {
+  display: block;
+}
+
+.sidebar-pinned .pin-label,
+.sidebar:hover .pin-label {
   display: block;
 }
 
@@ -456,7 +478,7 @@ button {
   min-height: 46px;
   padding: 10px 12px;
   border-radius: 12px;
-  color: #51617f;
+  color: var(--blue-deep);
   font-size: 14px;
   font-weight: 600;
 }
@@ -2314,13 +2336,14 @@ button {
   flex: 0 0 360px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 14px;
 }
 
 .footer-logo {
-  height: 130px;
+  height: 80px;
   width: auto;
   object-fit: contain;
+  object-position: top left;
 }
 
 .footer-desc {
@@ -2332,12 +2355,12 @@ button {
 .footer-socials {
   display: flex;
   gap: 12px;
-  margin-top: 4px;
+  margin-top: 10px;
 }
 
 .footer-social-btn {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 12px;
   background: var(--blue-brand);
   color: var(--white);
@@ -2364,14 +2387,14 @@ button {
   font-size: 20px;
   font-weight: 700;
   color: var(--blue-deep);
-  margin-bottom: 16px;
+  margin-bottom: 28px;
 }
 
 .footer-col ul {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 14px;
 }
 
 .footer-col ul li a {
