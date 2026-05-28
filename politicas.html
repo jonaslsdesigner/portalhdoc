@@ -3,57 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gestão Ágil — Portal HDOC Saúde</title>
+  <title>Políticas — Portal HDOC Saúde</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* ── Gestão Ágil Page ─────────────────────────────── */
-    .ga-page {
+    /* ── Políticas Page ─────────────────────────────── */
+    .pol-page {
       padding: 80px var(--content-gutter) 100px;
     }
 
-    /* Seção: imagem + texto lado a lado */
-    .ga-intro {
+    /* Intro */
+    .pol-intro {
       display: flex;
       gap: 48px;
       align-items: center;
-      margin: 0 auto 120px;
+      margin: 0 auto 80px;
       max-width: 1100px;
     }
 
-    .ga-intro-img {
-      flex: 0 0 500px;
-      width: 500px;
-      height: auto;
+    .pol-intro-img {
+      flex: 0 0 480px;
+      width: 480px;
+      height: 320px;
       object-fit: cover;
       border-radius: 12px;
     }
 
-    .ga-intro-body h2 {
-      font-family: var(--font-title);
-      font-size: 25px;
-      font-weight: 700;
-      color: var(--blue-brand);
-      margin-bottom: 14px;
-    }
-
-    .ga-intro-body p {
-      font-size: 16px;
-      color: var(--text);
-      line-height: 1.75;
-      margin-bottom: 12px;
-    }
-
-    /* Seção: Sprint e Backlog */
-    .ga-sprint {
-      margin: 0 auto 100px;
-      max-width: 1100px;
-      text-align: center;
-    }
-
-    .ga-sprint h2 {
+    .pol-intro-body h2 {
       font-family: var(--font-title);
       font-size: 25px;
       font-weight: 700;
@@ -61,92 +39,156 @@
       margin-bottom: 16px;
     }
 
-    .ga-sprint p {
+    .pol-intro-body p {
       font-size: 16px;
-      color: var(--text);
-      line-height: 1.75;
-    }
-
-    /* Tabs */
-    .ga-tabs {
-      display: flex;
-      gap: 12px;
-      margin: 0 auto 64px;
-      max-width: 1100px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .ga-tab-btn {
-      padding: 12px 24px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-      white-space: nowrap;
-    }
-
-    .ga-tab-btn:hover {
-      border-color: var(--blue-brand);
-      color: var(--blue-brand);
-    }
-
-    .ga-tab-btn.is-active {
-      background: var(--blue-brand);
-      color: #fff;
-      border-color: var(--blue-brand);
-    }
-
-    .ga-tab-panel {
-      display: none;
-    }
-
-    .ga-tab-panel.is-active {
-      display: block;
-    }
-
-    /* Tab content: imagem + texto */
-    .ga-tab-content {
-      display: flex;
-      gap: 48px;
-      align-items: center;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .ga-tab-img {
-      flex: 0 0 500px;
-      width: 500px;
-      height: auto;
-      object-fit: cover;
-      border-radius: 12px;
-    }
-
-    .ga-tab-body h3 {
-      font-family: var(--font-title);
-      font-size: 25px;
-      font-weight: 700;
-      color: var(--blue-brand);
-      margin-bottom: 14px;
-    }
-
-    .ga-tab-body p {
-      font-size: 14px;
       color: var(--text);
       line-height: 1.75;
       margin-bottom: 12px;
     }
 
-    .ga-tab-body p:last-child {
-      margin-bottom: 0;
+    .pol-intro-body p:last-of-type { margin-bottom: 20px; }
+
+    .pol-gov-logo {
+      height: 56px;
+      width: auto;
+      object-fit: contain;
     }
 
-    /* Banner de título */
-    .ga-hero {
+    /* Cards */
+    .pol-cards {
+      display: flex;
+      gap: 32px;
+    }
+
+    .pol-card {
+      flex: 1;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 72px 32px 76px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .pol-card-logo {
+      height: 80px;
+      width: 50%;
+      max-width: 100%;
+      object-fit: contain;
+      margin-bottom: 20px;
+    }
+
+    .pol-card-desc {
+      font-size: 15px;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    /* Accordion */
+    .pol-accordion {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pol-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .pol-item-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      width: 100%;
+      padding: 16px 20px;
+      background: #f5f6f8;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s;
+    }
+
+    .pol-item-header:hover { background: #edf0f4; }
+
+    .pol-item.is-open .pol-item-header { background: #edf0f4; }
+
+    .pol-item-toggle {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--blue-deep);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 20px;
+      text-align: center;
+    }
+
+    .pol-item-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--blue-deep);
+    }
+
+    .pol-item-body {
+      max-height: 0;
+      overflow: hidden;
+      background: var(--white);
+      border-top: 0px solid var(--line);
+      padding: 0 20px 0 58px;
+      transition: max-height 0.35s ease, padding 0.3s ease, border-top-width 0.3s ease;
+    }
+
+    .pol-item.is-open .pol-item-body {
+      max-height: 600px;
+      padding: 14px 20px 16px 58px;
+      border-top-width: 1px;
+    }
+
+    .pol-doc {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid #f0f1f3;
+      transition: opacity 0.15s;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .pol-doc:last-child { border-bottom: none; }
+    .pol-doc:hover { opacity: 0.7; }
+
+    .pol-doc-date {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--muted);
+      white-space: nowrap;
+      font-family: var(--font-body);
+      flex-shrink: 0;
+    }
+
+    .pol-doc-name {
+      font-size: 14px;
+      font-weight: 700;
+      font-family: var(--font-body);
+      color: var(--blue-deep);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      transition: color 0.15s;
+    }
+
+    .pol-doc:hover .pol-doc-name { color: var(--blue-brand); }
+    .pol-doc:hover .pol-doc-date { color: var(--blue-brand); }
+
+    /* Hero */
+    .pol-hero {
       position: relative;
       width: 100%;
       padding: 52px var(--content-gutter);
@@ -155,11 +197,10 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      margin-bottom: 0;
     }
 
-    .ga-hero::before {
-      content: "Gestão Ágil";
+    .pol-hero::before {
+      content: "Políticas";
       position: absolute;
       font-family: var(--font-title);
       font-size: 160px;
@@ -171,7 +212,7 @@
       user-select: none;
     }
 
-    .ga-hero-title {
+    .pol-hero-title {
       font-family: var(--font-title);
       font-size: 36px;
       font-weight: 700;
@@ -181,19 +222,10 @@
       z-index: 1;
     }
 
-    /* Responsivo */
     @media (max-width: 860px) {
-      .ga-intro,
-      .ga-tab-content {
-        flex-direction: column;
-      }
-
-      .ga-intro-img,
-      .ga-tab-img {
-        width: 100%;
-        flex: none;
-        height: 200px;
-      }
+      .pol-intro  { flex-direction: column; }
+      .pol-intro-img { width: 100%; flex: none; height: 220px; }
+      .pol-cards  { flex-direction: column; }
     }
   </style>
 </head>
@@ -247,9 +279,9 @@
       <nav class="topbar-nav" id="topbarNav">
         <a href="index.html" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Início</a>
         <a href="https://192.168.4.181/" class="nav-link" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>SSD</a>
-        <a href="gestao-agil.html" class="nav-link active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>Gestão Ágil</a>
+        <a href="gestao-agil.html" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>Gestão Ágil</a>
         <div class="nav-dropdown">
-          <a href="#" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>Governança <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></a>
+          <a href="#" class="nav-link active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>Governança <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></a>
           <div class="dropdown-menu">
             <a href="organogramas.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><rect x="1" y="14" width="6" height="4" rx="1"/><rect x="9" y="14" width="6" height="4" rx="1"/><rect x="17" y="14" width="6" height="4" rx="1"/><path d="M4 14V9h16v5M12 6v3"/></svg>Organogramas</a>
             <a href="politicas.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Políticas</a>
@@ -290,112 +322,161 @@
   </aside>
 
   <main class="main-content" id="mainContent">
-    <div class="ga-hero">
-      <h1 class="ga-hero-title">Gestão Ágil</h1>
+
+    <div class="pol-hero">
+      <h1 class="pol-hero-title">Políticas</h1>
     </div>
-    <div class="ga-page">
 
-      <!-- O que é Gestão Ágil -->
-      <div class="ga-intro">
+    <div class="pol-page">
+
+      <!-- Intro -->
+      <div class="pol-intro">
         <img
-          class="ga-intro-img"
-          src="ARQUIVOS/GESTÃO ÁGIL/O que é G.webp"
-          alt="O que é Gestão Ágil"
+          class="pol-intro-img"
+          src="ARQUIVOS/POLITICAS/NOSSOS DOC.jpeg"
+          alt="Documentos Institucionais"
         />
-        <div class="ga-intro-body">
-          <h2>O que é Gestão Ágil?</h2>
-          <p>A gestão ágil é um modelo focado em <strong>flexibilidade, organização e entrega contínua de valor</strong>. Ela torna os processos mais claros, estimula a colaboração entre equipes e promove melhorias constantes, garantindo produtividade, prioridades bem definidas e maior transparência sobre resultados e impactos das entregas.</p>
-          <p>Além disso, esse modelo permite respostas mais rápidas a mudanças, reduz desperdícios e melhora a tomada de decisão, pois o acompanhamento frequente do trabalho facilita ajustes estratégicos antes que problemas se tornem críticos.</p>
+        <div class="pol-intro-body">
+          <h2>Nossos Documentos<br>Institucionais</h2>
+          <p>Aqui você encontra os <strong>documentos institucionais</strong> que orientam nossas decisões, condutas e processos.</p>
+          <p>Esses documentos estabelecem diretrizes claras para garantir <strong>conformidade, ética, transparência e boas práticas</strong> em todas as atividades. Consulte sempre que precisar.</p>
+          <img
+            class="pol-gov-logo"
+            src="ARQUIVOS/POLITICAS/logo-governanca.png"
+            alt="Diretoria de Governança"
+            onerror="this.style.display='none'"
+          />
         </div>
       </div>
 
-      <!-- Sprint e Backlog -->
-      <div class="ga-sprint">
-        <h2>Sprint e Backlog</h2>
-        <p>Com o objetivo traçado e os resultados chave medindo o atingimento ou não das metas, usamos o <strong>Backlog</strong> que é a lista mestra de tudo o que precisa ser feito no setor por ordem de prioridade. <strong>Sprint</strong> é um ciclo de tempo fixo (geralmente 1-4 semanas) onde a equipe foca em entregar um conjunto de itens selecionados desse Backlog, transformando os resultados em melhoria contínua.</p>
-      </div>
+      <!-- Cards -->
+      <div class="pol-cards">
 
-      <!-- Tabs -->
-      <div class="ga-tabs" id="gaTabs">
-        <button class="ga-tab-btn is-active" data-tab="trello">SSD - Central Hub</button>
-        <button class="ga-tab-btn" data-tab="dss">DSS - Reuniões</button>
-        <button class="ga-tab-btn" data-tab="pdca">Ciclo de PDCA</button>
-        <button class="ga-tab-btn" data-tab="kpi">KPI (Indicadores de Desempenho)</button>
-      </div>
+        <!-- COAPH -->
+        <div class="pol-card">
+          <img class="pol-card-logo" src="ARQUIVOS/ORGANOGRAMAS/COAPHwebp-1536x1536.webp" alt="Coaph" />
+          <p class="pol-card-desc">Diretrizes que orientam a atuação da Coaph.</p>
+          <div class="pol-accordion">
 
-      <!-- Tab: Trello -->
-      <div class="ga-tab-panel is-active" id="tab-trello">
-        <div class="ga-tab-content">
-          <img
-            class="ga-tab-img"
-            src="ARQUIVOS/GESTÃO ÁGIL/SSD SLIDE.jpeg"
-            alt="SSD Central Hub"
-          />
-          <div class="ga-tab-body">
-            <h3>SSD — Central Hub</h3>
-            <p>O SSD é o <strong>sistema interno de pedidos da empresa</strong>, onde todos os setores estão conectados e podem fazer solicitações entre si de forma organizada e rastreável.</p>
-            <p>Por meio do SSD, qualquer setor pode abrir um pedido para outro, acompanhar o andamento em tempo real e garantir que nenhuma solicitação fique sem resposta.</p>
-            <p><strong>Gestores têm acesso completo aos números, resultados e relatórios</strong>, podendo visualizar o volume de pedidos, os tempos de retorno e a performance de cada área — tudo em um só lugar.</p>
-            <p>O SSD é uma ferramenta essencial para manter a comunicação entre setores fluida, os processos organizados e a liderança sempre informada sobre o que está acontecendo na operação.</p>
+            <div class="pol-item">
+              <button class="pol-item-header">
+                <span class="pol-item-toggle">+</span>
+                <span class="pol-item-title">Estatuto Social</span>
+              </button>
+              <div class="pol-item-body">
+                <a href="#" class="pol-doc">
+                  <span class="pol-doc-date">07/08/2025 —</span>
+                  <span class="pol-doc-name">Estatuto Social da Coaph</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="pol-item">
+              <button class="pol-item-header">
+                <span class="pol-item-toggle">+</span>
+                <span class="pol-item-title">Código de Conduta e Ética</span>
+              </button>
+              <div class="pol-item-body">
+                <a href="#" class="pol-doc">
+                  <span class="pol-doc-date">26/02/2025 —</span>
+                  <span class="pol-doc-name">Código de Conduta e Ética Profissional</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="pol-item">
+              <button class="pol-item-header">
+                <span class="pol-item-toggle">+</span>
+                <span class="pol-item-title">Regimento Interno</span>
+              </button>
+              <div class="pol-item-body">
+                <a href="#" class="pol-doc">
+                  <span class="pol-doc-date">26/02/2025 —</span>
+                  <span class="pol-doc-name">Regimento Interno Coaph</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="pol-item">
+              <button class="pol-item-header">
+                <span class="pol-item-toggle">+</span>
+                <span class="pol-item-title">Políticas</span>
+              </button>
+              <div class="pol-item-body">
+                <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Regulamentação do Fates</span></a>
+                <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Substituição do Cooperado</span></a>
+                <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Sustentabilidade</span></a>
+                <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Segurança da Informação</span></a>
+                <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Compras e Contratações</span></a>
+                <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Gestão de Riscos</span></a>
+                <a href="#" class="pol-doc"><span class="pol-doc-date">05/08/2025 —</span><span class="pol-doc-name">Gerenciamento de Crises</span></a>
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
 
-      <!-- Tab: DSS - Reuniões -->
-      <div class="ga-tab-panel" id="tab-dss">
-        <div class="ga-tab-content">
-          <img
-            class="ga-tab-img"
-            src="ARQUIVOS/GESTÃO ÁGIL/Reunião de A.webp"
-            alt="Reunião de Alinhamento Semanal"
-          />
-          <div class="ga-tab-body">
-            <h3>Reunião de Alinhamento Semanal – DSS</h3>
-            <p>A reunião de alinhamento semanal é um encontro rápido e objetivo que garante que todos estejam na mesma direção.</p>
-            <p><strong>Nessa reunião, o setor revisa o que foi feito durante a semana</strong>, o que está em andamento e o que será priorizado na semana seguinte. O objetivo é identificar obstáculos, ajustar rotas rapidamente e reforçar o foco nas metas do período.</p>
-            <p><strong>Também são tratados tópicos obrigatórios, como conversar com sua equipe sobre as políticas de Governança/Compliance</strong>, para reforçar a importância e atenção no desenvolvimento do trabalho. Uso o trello durante as reuniões e o dashboard de processos, para analisar a performance da sua equipe e facilitar o entendimento das ações.</p>
-            <p>Essa é uma ferramenta essencial para manter ritmo, comunicação clara e organização do trabalho. Este é um dos indicadores voltados para as lideranças e gestão. Utilize o modelo padrão disponibilizado pela Gestão Ágil e caso tenha dúvidas, nos procure.</p>
+        <!-- Grupo HDOC -->
+        <div class="pol-card">
+          <img class="pol-card-logo" src="ARQUIVOS/ORGANOGRAMAS/GRUPO-1-1536x1536.png" alt="Grupo HDOC Saúde" />
+          <p class="pol-card-desc">Diretrizes que orientam a atuação do Grupo HDOC Saúde.</p>
+          <div class="pol-accordion">
+
+            <div class="pol-item">
+              <button class="pol-item-header">
+                <span class="pol-item-toggle">+</span>
+                <span class="pol-item-title">Estatuto Social</span>
+              </button>
+              <div class="pol-item-body">
+                <a href="#" class="pol-doc">
+                  <span class="pol-doc-date">18/02/2025 —</span>
+                  <span class="pol-doc-name">Estatuto Social</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="pol-item">
+              <button class="pol-item-header">
+                <span class="pol-item-toggle">+</span>
+                <span class="pol-item-title">Código de Conduta e Ética</span>
+              </button>
+              <div class="pol-item-body">
+                <a href="#" class="pol-doc">
+                  <span class="pol-doc-date">26/02/2025 —</span>
+                  <span class="pol-doc-name">Código de Conduta e Ética Profissional</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="pol-item">
+              <button class="pol-item-header">
+                <span class="pol-item-toggle">+</span>
+                <span class="pol-item-title">Regimento Interno</span>
+              </button>
+              <div class="pol-item-body">
+                <a href="#" class="pol-doc">
+                  <span class="pol-doc-date">Em breve —</span>
+                  <span class="pol-doc-name">Regimento Interno</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="pol-item">
+              <button class="pol-item-header">
+                <span class="pol-item-toggle">+</span>
+                <span class="pol-item-title">Políticas</span>
+              </button>
+              <div class="pol-item-body">
+                <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Sustentabilidade</span></a>
+                <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Segurança da Informação</span></a>
+                <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Compras e Contratações</span></a>
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
 
-      <!-- Tab: Ciclo de PDCA -->
-      <div class="ga-tab-panel" id="tab-pdca">
-        <div class="ga-tab-content">
-          <img
-            class="ga-tab-img"
-            src="ARQUIVOS/GESTÃO ÁGIL/Ciclo de PDC.webp"
-            alt="Ciclo de PDCA"
-          />
-          <div class="ga-tab-body">
-            <h3>Ciclo de PDCA</h3>
-            <p>O Ciclo de PDCA é um método de melhoria contínua utilizado para planejar, executar, analisar resultados e agir de forma estratégica.</p>
-            <p>Ele é dividido em quatro etapas:</p>
-            <p>• <strong>P – Planejar:</strong> definir o problema, metas e ações.</p>
-            <p>• <strong>D – Executar:</strong> colocar o plano em prática.</p>
-            <p>• <strong>C – Checar:</strong> verificar os resultados obtidos.</p>
-            <p>• <strong>A – Agir:</strong> ajustar o que precisa e padronizar o que deu certo.</p>
-            <p>O PDCA ajuda os setores a evoluírem de forma estruturada, garantindo eficiência, previsibilidade e aprendizado constante. Utilize o modelo padrão disponibilizado pela Gestão Ágil, e caso tenha dúvidas nos procure.</p>
-          </div>
-        </div>
       </div>
-
-      <!-- Tab: KPI -->
-      <div class="ga-tab-panel" id="tab-kpi">
-        <div class="ga-tab-content">
-          <img
-            class="ga-tab-img"
-            src="ARQUIVOS/GESTÃO ÁGIL/KPI (Indi.webp"
-            alt="KPI Indicadores de Desempenho"
-          />
-          <div class="ga-tab-body">
-            <h3>KPI (Indicadores de Desempenho)</h3>
-            <p>KPIs são <strong>indicadores utilizados para medir resultados e acompanhar a performance de cada área.</strong> Eles mostram, de forma clara, se o setor está no caminho certo, se precisa ajustar processos ou se já atingiu os objetivos planejados.</p>
-            <p>Com KPIs bem definidos e acompanhados regularmente, os gestores conseguem tomar decisões mais rápidas, precisas e orientadas por dados. Utilize o modelo padrão disponibilizado pela Gestão Ágil, e caso tenha dúvidas nos procure.</p>
-          </div>
-        </div>
-      </div>
-
     </div>
   </main>
 
@@ -448,7 +529,6 @@
   <script>
     'use strict';
 
-    // Sidebar toggle
     const sidebar = document.getElementById('sidebar');
     const sidebarPinBtn = document.getElementById('sidebarPinBtn');
     if (sidebarPinBtn) {
@@ -458,7 +538,6 @@
       });
     }
 
-    // Topbar scroll shadow
     const topbar = document.getElementById('topbar');
     window.addEventListener('scroll', () => {
       topbar.style.boxShadow = window.scrollY > 10
@@ -466,15 +545,16 @@
         : '0 1px 3px rgba(0,0,0,.06)';
     }, { passive: true });
 
-    // Tabs
-    document.querySelectorAll('.ga-tab-btn').forEach(btn => {
+    // Accordion com animação
+    document.querySelectorAll('.pol-item-header').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.ga-tab-btn').forEach(b => b.classList.remove('is-active'));
-        document.querySelectorAll('.ga-tab-panel').forEach(p => p.classList.remove('is-active'));
-        btn.classList.add('is-active');
-        document.getElementById('tab-' + btn.dataset.tab).classList.add('is-active');
+        const item = btn.closest('.pol-item');
+        const isOpen = item.classList.contains('is-open');
+        item.classList.toggle('is-open', !isOpen);
+        btn.querySelector('.pol-item-toggle').textContent = isOpen ? '+' : '−';
       });
     });
   </script>
+
 </body>
 </html>

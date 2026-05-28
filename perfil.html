@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Perfil — Portal HDOC Saúde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Perfil Page ─────────────────────────────── */
+
+    /* Cover */
+    .pf-cover {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, #0d1f3c 0%, #1a3a5c 50%, #1e4976 100%);
+      overflow: hidden;
+    }
+
+    .pf-cover-pattern {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 15% 40%, rgba(255,255,255,0.06) 80px, transparent 80px),
+        radial-gradient(circle at 35% 20%, rgba(255,255,255,0.04) 60px, transparent 60px),
+        radial-gradient(circle at 70% 60%, rgba(255,255,255,0.05) 100px, transparent 100px),
+        radial-gradient(circle at 85% 30%, rgba(255,255,255,0.04) 70px, transparent 70px),
+        radial-gradient(circle at 55% 80%, rgba(255,255,255,0.03) 90px, transparent 90px);
+    }
+
+    .pf-cover-change {
+      position: absolute;
+      bottom: 28px;
+      left: var(--content-gutter);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 14px;
+      background: rgba(0,0,0,0.4);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .pf-cover-change:hover { background: rgba(0,0,0,0.6); }
+
+    .pf-cover-feedbacks {
+      position: absolute;
+      bottom: 20px;
+      right: 32px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .pf-cover-feedbacks strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .pf-cover-feedbacks span {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+      text-transform: uppercase;
+    }
+
+    /* Wrapper da página — só padding lateral, igual ao .ga-page */
+    .pf-inner {
+      padding: 0 var(--content-gutter);
+    }
+
+    /* Identity bar */
+    .pf-identity {
+      display: flex;
+      align-items: flex-end;
+      gap: 20px;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    .pf-avatar-wrap {
+      position: relative;
+      margin-top: -56px;
+      flex-shrink: 0;
+    }
+
+    .pf-avatar {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      border: 4px solid var(--white);
+      object-fit: cover;
+      display: block;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    }
+
+    .pf-avatar-edit {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--blue-brand);
+      border: 2px solid var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .pf-identity-info {
+      padding: 16px 0 14px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .pf-identity-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-title);
+      font-size: 34px;
+      font-weight: 700;
+      color: var(--blue-deep);
+    }
+
+    .pf-badge-online {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: #27ae60;
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .pf-identity-role {
+      font-size: 18px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Tabs */
+    .pf-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--line);
+      margin-top: 20px;
+    }
+
+    .pf-tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .pf-tab-btn.is-active {
+      color: var(--blue-brand);
+      border-bottom-color: var(--blue-brand);
+    }
+
+    .pf-tab-btn:hover:not(.is-active) { color: var(--blue-deep); }
+
+    /* Layout */
+    .pf-body {
+      display: flex;
+      gap: 28px;
+      padding: 32px 0 100px;
+    }
+
+    .pf-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+    .pf-aside { width: 300px; flex-shrink: 0; display: flex; flex-direction: column; gap: 20px; }
+
+    .pf-tab-panel { display: none; }
+    .pf-tab-panel.is-active { display: contents; }
+
+    /* Cards */
+    .pf-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 24px 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .pf-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .pf-card-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-family: var(--font-title);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--blue-brand);
+    }
+
+    .pf-card-edit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      color: var(--muted);
+      border: 1.5px solid transparent;
+      background: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .pf-card-edit:hover {
+      background: var(--blue-soft);
+      color: var(--blue-brand);
+      border-color: var(--line);
+    }
+
+    /* Skill bars */
+    .pf-skills { display: flex; flex-direction: column; gap: 12px; }
+
+    .pf-skill-bar {
+      display: flex;
+      align-items: center;
+      border-radius: 6px;
+      overflow: hidden;
+      height: 34px;
+      background: #eef1f6;
+    }
+
+    .pf-skill-label {
+      padding: 0 14px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      white-space: nowrap;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .pf-skill-fill {
+      flex: 1;
+      height: 100%;
+    }
+
+    .pf-skill-pct {
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    /* Roles */
+    .pf-roles { display: flex; flex-direction: column; gap: 24px; }
+
+    .pf-role {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .pf-role-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #edf2fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--blue-deep);
+    }
+
+    .pf-role h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--blue-deep);
+      margin-bottom: 5px;
+    }
+
+    .pf-role p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* Sobre tab */
+    .pf-about-grid { display: flex; flex-direction: column; gap: 14px; }
+
+    .pf-about-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 14px;
+    }
+
+    .pf-about-row svg { flex-shrink: 0; color: var(--blue-brand); margin-top: 1px; }
+    .pf-about-row strong { color: var(--blue-deep); margin-right: 6px; }
+
+    .pf-desc-text {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    /* Mídia */
+    .pf-media-btns {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .pf-media-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 6px;
+      border-radius: 10px;
+      background: var(--blue-brand);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .pf-media-btn:hover { opacity: 0.87; }
+
+    .pf-media-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .pf-media-grid img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .pf-body { flex-direction: column; }
+      .pf-aside { width: 100%; }
+    }
+
+    /* ── Edit Modal ─────────────────────────────── */
+    .pf-edit-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,20,50,0.55);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(3px);
+    }
+    .pf-edit-overlay.is-open { display: flex; }
+
+    .pf-edit-modal {
+      background: var(--white);
+      border-radius: 18px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.22);
+      width: 100%;
+      max-width: 520px;
+      margin: 16px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pf-edit-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--line);
+      flex-shrink: 0;
+      border-radius: 18px 18px 0 0;
+    }
+
+    .pf-edit-modal-title {
+      font-family: var(--font-title);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--blue-deep);
+    }
+
+    .pf-edit-modal-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .pf-edit-modal-close:hover { background: #f0e8e8; color: #c0392b; border-color: #e0b0b0; }
+
+    .pf-edit-modal-body {
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .pf-edit-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .pf-edit-field label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .pf-edit-field input,
+    .pf-edit-field textarea {
+      padding: 10px 14px;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--text);
+      background: var(--white);
+      transition: border-color 0.15s;
+      resize: vertical;
+    }
+    .pf-edit-field input:focus,
+    .pf-edit-field textarea:focus {
+      border-color: var(--blue-brand);
+      outline: none;
+    }
+
+    .pf-edit-modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 14px 24px 18px;
+      border-top: 1px solid var(--line);
+      flex-shrink: 0;
+      border-radius: 0 0 18px 18px;
+    }
+
+    .pf-edit-btn-cancel {
+      padding: 9px 20px;
+      border-radius: 8px;
+      border: 1.5px solid var(--line);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .pf-edit-btn-cancel:hover { background: var(--bg); }
+
+    .pf-edit-btn-save {
+      padding: 9px 22px;
+      border-radius: 8px;
+      border: none;
+      background: var(--blue-brand);
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .pf-edit-btn-save:hover { opacity: 0.88; }
+
+    .pf-edit-skill-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 10px;
+      background: var(--bg);
+      border-radius: 8px;
+    }
+    .pf-edit-skill-row input[type="text"] { flex: 1; padding: 8px 10px; border: 1.5px solid var(--line); border-radius: 7px; font-size: 13px; font-family: var(--font-body); }
+    .pf-edit-skill-row input[type="number"] { width: 62px; padding: 8px 6px; border: 1.5px solid var(--line); border-radius: 7px; font-size: 13px; text-align: center; font-family: var(--font-body); }
+    .pf-edit-skill-row input[type="color"] { width: 36px; height: 36px; padding: 2px; border-radius: 6px; border: 1.5px solid var(--line); cursor: pointer; }
+    .pf-edit-skill-row input:focus { border-color: var(--blue-brand); outline: none; }
+
+    .pf-edit-remove-btn {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      border: none;
+      background: #fee2e2;
+      color: #dc2626;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+      line-height: 1;
+      transition: background 0.15s;
+    }
+    .pf-edit-remove-btn:hover { background: #fecaca; }
+
+    .pf-edit-add-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 8px;
+      border: 1.5px dashed var(--line);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue-brand);
+      cursor: pointer;
+      width: 100%;
+      justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+      font-family: var(--font-body);
+    }
+    .pf-edit-add-btn:hover { background: var(--blue-soft); border-color: var(--blue-brand); }
+
+    .pf-edit-role-row {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 12px 14px 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+    .pf-edit-role-row > .pf-edit-remove-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" id="topbar">
+    <div class="topbar-primary">
+      <div class="topbar-primary-spacer"></div>
+      <div class="topbar-actions">
+        <button class="action-btn" aria-label="Mensagens">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <button class="action-btn" aria-label="Notificações">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+        <div class="user-avatar" id="userAvatar">
+          <img src="ARQUIVOS/FOTOS%20PERFIL/JONAS%20PERFIL.png" alt="Jonas Lima" />
+          <span class="user-name">Jonas Lima</span>
+          <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          <div class="user-dropdown">
+            <div class="user-dropdown-header">Sua Conta</div>
+            <a href="perfil.html">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              Meu Perfil
+            </a>
+            <a href="#">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M4.93 4.93a10 10 0 0 0 14.14 14.14"/></svg>
+              Configurações
+            </a>
+            <a href="#">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Meus Grupos
+            </a>
+            <a href="#">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Calendário
+            </a>
+            <hr />
+            <a href="index.html" class="logout">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+              Sair
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topbar-secondary">
+      <div class="topbar-logo">
+        <img src="ARQUIVOS/Portal-HDOC-Saúde---Arquivos.png" alt="Portal HDOC Saúde" class="logo-full-img" />
+      </div>
+      <nav class="topbar-nav" id="topbarNav">
+        <a href="index.html" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Início</a>
+        <a href="https://192.168.4.181/" class="nav-link" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>SSD</a>
+        <a href="gestao-agil.html" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>Gestão Ágil</a>
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>Governança <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></a>
+          <div class="dropdown-menu">
+            <a href="organogramas.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><rect x="1" y="14" width="6" height="4" rx="1"/><rect x="9" y="14" width="6" height="4" rx="1"/><rect x="17" y="14" width="6" height="4" rx="1"/><path d="M4 14V9h16v5M12 6v3"/></svg>Organogramas</a>
+            <a href="politicas.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Políticas</a>
+            <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Conselho de Administração</a>
+            <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M20 8h2M2 8h2"/></svg>Comitês</a>
+            <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Setores</a>
+          </div>
+        </div>
+        <a href="#" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Negócios</a>
+      </nav>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-pin-btn" id="sidebarPinBtn" title="Fixar menu">
+      <svg class="pin-icon-expand" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17l5-5-5-5"/><path d="M13 17l5-5-5-5"/></svg>
+      <span class="pin-label">INTRANET</span>
+      <svg class="pin-icon-collapse" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-5-5 5-5"/><path d="M18 17l-5-5 5-5"/></svg>
+    </button>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="sidebar-link" title="Feed de Notícias">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 8h10M7 12h7"/><path d="M8 20h8"/></svg>
+        <span>Feed de Notícias</span>
+      </a>
+      <a href="#" class="sidebar-link active" title="Membros">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span>Membros</span>
+      </a>
+      <a href="#" class="sidebar-link" title="Grupos">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Grupos</span>
+      </a>
+      <a href="#" class="sidebar-link" title="Artigos">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        <span>Artigos</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="main-content" id="mainContent" style="padding-top:0;">
+
+    <!-- Cover -->
+    <div class="pf-cover">
+      <div class="pf-cover-pattern"></div>
+      <button class="pf-cover-change">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        Trocar Capa
+      </button>
+      <div class="pf-cover-feedbacks">
+        <strong>0</strong>
+        <span>Feedback(s)</span>
+      </div>
+    </div>
+
+    <div class="pf-inner">
+
+    <!-- Identity -->
+    <div class="pf-identity">
+      <div class="pf-avatar-wrap">
+        <img class="pf-avatar" src="ARQUIVOS/FOTOS%20PERFIL/JONAS%20PERFIL.png" alt="Jonas Lima" />
+        <label class="pf-avatar-edit" title="Trocar foto">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <input type="file" accept="image/*" style="display:none" id="avatarInput" />
+        </label>
+      </div>
+      <div class="pf-identity-info">
+        <div class="pf-identity-name">
+          Jonas Lima
+          <span class="pf-badge-online">Online</span>
+        </div>
+        <div class="pf-identity-role">Designer Gráfico · Marketing &amp; Governança</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="pf-tabs">
+      <button class="pf-tab-btn is-active" data-tab="visao">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Visão Geral
+      </button>
+      <button class="pf-tab-btn" data-tab="sobre">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Sobre
+      </button>
+      <button class="pf-tab-btn" data-tab="grupos">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Grupos
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="pf-body">
+
+      <!-- ── ABA: Visão Geral ── -->
+      <div class="pf-tab-panel is-active" id="pf-tab-visao">
+        <div class="pf-main">
+
+          <!-- Habilidades -->
+          <div class="pf-card">
+            <div class="pf-card-header">
+              <div class="pf-card-title">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                Habilidades e Conhecimentos
+              </div>
+              <button class="pf-card-edit">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+            </div>
+            <div class="pf-skills">
+              <div class="pf-skill-bar">
+                <span class="pf-skill-label" style="background:#2389d7; width:100%;">Designer Gráfico</span>
+                <span class="pf-skill-fill" style="background:#2389d7;"></span>
+                <span class="pf-skill-pct">100%</span>
+              </div>
+              <div class="pf-skill-bar">
+                <span class="pf-skill-label" style="background:#27ae60; width:70%;">Web-Designer</span>
+                <span class="pf-skill-fill"></span>
+                <span class="pf-skill-pct">70%</span>
+              </div>
+              <div class="pf-skill-bar">
+                <span class="pf-skill-label" style="background:#f39c12; width:70%;">Video Maker</span>
+                <span class="pf-skill-fill"></span>
+                <span class="pf-skill-pct">70%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Funções -->
+          <div class="pf-card">
+            <div class="pf-card-header">
+              <div class="pf-card-title">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+                Funções na Empresa
+              </div>
+              <button class="pf-card-edit">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+            </div>
+            <div class="pf-roles">
+              <div class="pf-role">
+                <div class="pf-role-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                </div>
+                <div>
+                  <h4>Marketing</h4>
+                  <p>Atuo como parte integrante do setor de Marketing, colaborando no desenvolvimento da comunicação visual institucional. Sou responsável pela criação e adaptação de peças gráficas, apresentações estratégicas e demais materiais voltados à divulgação e fortalecimento da imagem da marca.</p>
+                </div>
+              </div>
+              <div class="pf-role">
+                <div class="pf-role-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div>
+                  <h4>Governança</h4>
+                  <p>Responsável pelo desenvolvimento de toda a comunicação visual do setor de Governança. Atuo na criação de cards informativos, materiais gráficos institucionais e elementos visuais para divulgação de políticas, normas e diretrizes. Suporte na estilização e atualização dos conteúdos relacionados no site oficial.</p>
+                </div>
+              </div>
+              <div class="pf-role">
+                <div class="pf-role-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+                </div>
+                <div>
+                  <h4>Designer</h4>
+                  <p>Responsável por todo o processo de desenvolvimento de peças criativas, identidades visuais e materiais gráficos institucionais. Atuo na construção da comunicação visual das marcas, garantindo alinhamento estético, coerência com os valores organizacionais e impacto visual.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Aside: Mídia -->
+        <div class="pf-aside">
+          <div class="pf-card">
+            <div class="pf-card-header">
+              <div class="pf-card-title">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                Mídia
+              </div>
+            </div>
+            <div class="pf-media-btns">
+              <button class="pf-media-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                Fotos
+              </button>
+              <button class="pf-media-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                Vídeos
+              </button>
+              <button class="pf-media-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                Áudios
+              </button>
+              <button class="pf-media-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Arquivos
+              </button>
+            </div>
+            <div class="pf-media-grid">
+              <img src="ARQUIVOS/FOTOS%20PERFIL/JONAS%20PERFIL.png" alt="Foto 1" />
+              <img src="ARQUIVOS/FOTOS%20PERFIL/JONAS%20PERFIL.png" alt="Foto 2" />
+              <img src="ARQUIVOS/FOTOS%20PERFIL/JONAS%20PERFIL.png" alt="Foto 3" />
+              <img src="ARQUIVOS/FOTOS%20PERFIL/JONAS%20PERFIL.png" alt="Foto 4" />
+              <img src="ARQUIVOS/FOTOS%20PERFIL/JONAS%20PERFIL.png" alt="Foto 5" />
+              <img src="ARQUIVOS/FOTOS%20PERFIL/JONAS%20PERFIL.png" alt="Foto 6" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ABA: Sobre ── -->
+      <div class="pf-tab-panel" id="pf-tab-sobre">
+        <div class="pf-main">
+          <div class="pf-card">
+            <div class="pf-card-header">
+              <div class="pf-card-title">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Sobre mim
+              </div>
+              <button class="pf-card-edit">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+            </div>
+            <p class="pf-desc-text">Designer Gráfico e Web-Designer com foco em comunicação visual institucional. Apaixonado por criar soluções visuais que conectam marcas ao seu público de forma clara, estratégica e impactante.</p>
+          </div>
+          <div class="pf-card">
+            <div class="pf-card-header">
+              <div class="pf-card-title">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                Informações
+              </div>
+              <button class="pf-card-edit">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              </button>
+            </div>
+            <div class="pf-about-grid">
+              <div class="pf-about-row">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+                <span><strong>Cargo:</strong> Designer Gráfico</span>
+              </div>
+              <div class="pf-about-row">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+                <span><strong>Empresa:</strong> Grupo HDOC Saúde</span>
+              </div>
+              <div class="pf-about-row">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.86 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span><strong>Email:</strong> jonaslimasousa9@gmail.com</span>
+              </div>
+              <div class="pf-about-row">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <span><strong>Na empresa desde:</strong> 2024</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pf-aside"></div>
+      </div>
+
+      <!-- ── ABA: Grupos ── -->
+      <div class="pf-tab-panel" id="pf-tab-grupos">
+        <div class="pf-main">
+          <div class="pf-card" style="text-align:center; padding: 48px;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#dfe7f0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 14px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <p style="color:var(--muted); font-size:14px;">Nenhum grupo ainda.</p>
+          </div>
+        </div>
+        <div class="pf-aside"></div>
+      </div>
+
+    </div>
+
+    </div><!-- /pf-inner -->
+  </main>
+
+  <!-- Edit Modal -->
+  <div class="pf-edit-overlay" id="pfEditOverlay">
+    <div class="pf-edit-modal" id="pfEditModal">
+      <div class="pf-edit-modal-header">
+        <span class="pf-edit-modal-title" id="pfEditTitle"></span>
+        <button class="pf-edit-modal-close" id="pfEditClose">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="pf-edit-modal-body" id="pfEditBody"></div>
+      <div class="pf-edit-modal-footer">
+        <button class="pf-edit-btn-cancel" id="pfEditCancel">Cancelar</button>
+        <button class="pf-edit-btn-save" id="pfEditSave">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="ARQUIVOS/Portal-HDOC-Saúde---Arquivos.png" alt="Portal HDOC Saúde" class="footer-logo" />
+        <p class="footer-desc">Aqui, você acompanha as novidades da empresa, participa de grupos e contribui para um ambiente corporativo mais conectado e colaborativo.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/grupohdocsaude/" class="footer-social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://grupohdocsaude.com.br/" class="footer-social-btn" aria-label="Site" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </a>
+          <a href="https://192.168.4.181/" class="footer-social-btn" aria-label="SSD" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Páginas</h4>
+          <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="gestao-agil.html">Gestão Ágil</a></li>
+            <li><a href="organogramas.html">Organogramas</a></li>
+            <li><a href="politicas.html">Políticas</a></li>
+            <li><a href="perfil.html">Meu Perfil</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Portal</h4>
+          <ul>
+            <li><a href="https://192.168.4.181/" target="_blank" rel="noopener noreferrer">SSD</a></li>
+            <li><a href="organogramas.html">Governança</a></li>
+            <li><a href="#">Negócios</a></li>
+            <li><a href="#">Membros</a></li>
+            <li><a href="#">Grupos</a></li>
+            <li><a href="#">Artigos</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Portal HDOC Saúde — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script>
+    'use strict';
+
+    // Sidebar
+    const sidebar = document.getElementById('sidebar');
+    const sidebarPinBtn = document.getElementById('sidebarPinBtn');
+    if (sidebarPinBtn) {
+      sidebarPinBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('sidebar-pinned');
+        sidebarPinBtn.title = sidebar.classList.contains('sidebar-pinned') ? 'Minimizar menu' : 'Fixar menu';
+      });
+    }
+
+    const topbar = document.getElementById('topbar');
+    window.addEventListener('scroll', () => {
+      topbar.style.boxShadow = window.scrollY > 10
+        ? '0 2px 20px rgba(0,87,184,.12)'
+        : '0 1px 3px rgba(0,0,0,.06)';
+    }, { passive: true });
+
+    // Tabs
+    document.querySelectorAll('.pf-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.pf-tab-btn').forEach(b => b.classList.remove('is-active'));
+        document.querySelectorAll('.pf-tab-panel').forEach(p => p.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        document.getElementById('pf-tab-' + btn.dataset.tab).classList.add('is-active');
+      });
+    });
+
+    // Avatar upload preview
+    document.getElementById('avatarInput')?.addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => document.querySelector('.pf-avatar').src = e.target.result;
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+
+    // ── Profile Edit System ──────────────────────────
+    const PF_KEY = 'pfProfile';
+    const pfLoad = () => { try { return JSON.parse(localStorage.getItem(PF_KEY)) || {}; } catch { return {}; } };
+    const pfSave = d => localStorage.setItem(PF_KEY, JSON.stringify(d));
+
+    const SKILL_ICONS = [
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+      '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>',
+    ];
+
+    function renderSkills(skills) {
+      const c = document.querySelector('.pf-skills');
+      if (!c) return;
+      c.innerHTML = skills.map(s => `
+        <div class="pf-skill-bar">
+          <span class="pf-skill-label" style="background:${s.cor};width:${s.pct}%">${s.nome}</span>
+          <span class="pf-skill-fill"></span>
+          <span class="pf-skill-pct">${s.pct}%</span>
+        </div>`).join('');
+    }
+
+    function renderFuncoes(funcoes) {
+      const c = document.querySelector('.pf-roles');
+      if (!c) return;
+      c.innerHTML = funcoes.map((f, i) => `
+        <div class="pf-role">
+          <div class="pf-role-icon">${SKILL_ICONS[i % SKILL_ICONS.length]}</div>
+          <div><h4>${f.titulo}</h4><p>${f.desc}</p></div>
+        </div>`).join('');
+    }
+
+    function rgbToHex(rgb) {
+      if (!rgb || rgb.startsWith('#')) return rgb || '#2389d7';
+      const m = rgb.match(/\d+/g);
+      return m ? '#' + m.slice(0,3).map(n => (+n).toString(16).padStart(2,'0')).join('') : '#2389d7';
+    }
+
+    function getCurrentSkills() {
+      return Array.from(document.querySelectorAll('.pf-skill-bar')).map(b => ({
+        nome: b.querySelector('.pf-skill-label')?.textContent.trim() || '',
+        pct: parseInt(b.querySelector('.pf-skill-pct')?.textContent) || 50,
+        cor: rgbToHex(b.querySelector('.pf-skill-label')?.style.background) || '#2389d7',
+      }));
+    }
+
+    function getCurrentFuncoes() {
+      return Array.from(document.querySelectorAll('.pf-role')).map(r => ({
+        titulo: r.querySelector('h4')?.textContent.trim() || '',
+        desc: r.querySelector('p')?.textContent.trim() || '',
+      }));
+    }
+
+    // Apply saved data on load
+    (function apply() {
+      const d = pfLoad();
+      if (d.sobre) { const el = document.querySelector('.pf-desc-text'); if (el) el.textContent = d.sobre; }
+      if (d.informacoes) {
+        const rows = document.querySelectorAll('.pf-about-row span');
+        const { cargo, empresa, email, desde } = d.informacoes;
+        if (cargo && rows[0]) rows[0].innerHTML = `<strong>Cargo:</strong> ${cargo}`;
+        if (empresa && rows[1]) rows[1].innerHTML = `<strong>Empresa:</strong> ${empresa}`;
+        if (email && rows[2]) rows[2].innerHTML = `<strong>Email:</strong> ${email}`;
+        if (desde && rows[3]) rows[3].innerHTML = `<strong>Na empresa desde:</strong> ${desde}`;
+      }
+      if (d.habilidades) renderSkills(d.habilidades);
+      if (d.funcoes) renderFuncoes(d.funcoes);
+    })();
+
+    // Modal wiring
+    const pfOverlay = document.getElementById('pfEditOverlay');
+    const pfTitle   = document.getElementById('pfEditTitle');
+    const pfBody    = document.getElementById('pfEditBody');
+    const pfSaveBtn = document.getElementById('pfEditSave');
+    let pfCurrent   = null;
+
+    const TITLES = { habilidades: 'Habilidades e Conhecimentos', funcoes: 'Funções na Empresa', sobre: 'Sobre mim', informacoes: 'Informações' };
+
+    function pfOpen(card) {
+      pfCurrent = card;
+      pfTitle.textContent = TITLES[card];
+      const d = pfLoad();
+      if (card === 'sobre') {
+        const txt = d.sobre || document.querySelector('.pf-desc-text')?.textContent || '';
+        pfBody.innerHTML = `<div class="pf-edit-field"><label>Descrição</label><textarea id="pfSobre" rows="5">${txt}</textarea></div>`;
+      } else if (card === 'informacoes') {
+        const rows = document.querySelectorAll('.pf-about-row span');
+        const ex = el => el?.textContent.replace(/^[^:]+:\s*/,'').trim() || '';
+        const info = d.informacoes || { cargo: ex(rows[0]), empresa: ex(rows[1]), email: ex(rows[2]), desde: ex(rows[3]) };
+        pfBody.innerHTML = `
+          <div class="pf-edit-field"><label>Cargo</label><input id="pfCargo" type="text" value="${info.cargo}"/></div>
+          <div class="pf-edit-field"><label>Empresa</label><input id="pfEmpresa" type="text" value="${info.empresa}"/></div>
+          <div class="pf-edit-field"><label>Email</label><input id="pfEmail" type="email" value="${info.email}"/></div>
+          <div class="pf-edit-field"><label>Na empresa desde</label><input id="pfDesde" type="text" value="${info.desde}"/></div>`;
+      } else if (card === 'habilidades') {
+        const skills = d.habilidades || getCurrentSkills();
+        pfBody.innerHTML = `<div id="pfSkillRows">${skills.map(s => skillRow(s)).join('')}</div>
+          <button type="button" class="pf-edit-add-btn" id="pfAddSkill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Adicionar habilidade
+          </button>`;
+        document.getElementById('pfAddSkill').onclick = () => { document.getElementById('pfSkillRows').insertAdjacentHTML('beforeend', skillRow({nome:'',pct:50,cor:'#2389d7'})); bindRemove(); };
+        bindRemove();
+      } else if (card === 'funcoes') {
+        const funcoes = d.funcoes || getCurrentFuncoes();
+        pfBody.innerHTML = `<div id="pfFuncaoRows">${funcoes.map(f => funcaoRow(f)).join('')}</div>
+          <button type="button" class="pf-edit-add-btn" id="pfAddFuncao">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Adicionar função
+          </button>`;
+        document.getElementById('pfAddFuncao').onclick = () => { document.getElementById('pfFuncaoRows').insertAdjacentHTML('beforeend', funcaoRow({titulo:'',desc:''})); bindRemove(); };
+        bindRemove();
+      }
+      pfOverlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function skillRow(s) {
+      return `<div class="pf-edit-skill-row">
+        <input type="text" placeholder="Nome" value="${s.nome}"/>
+        <input type="number" min="0" max="100" value="${s.pct}" title="%"/>
+        <input type="color" value="${s.cor}"/>
+        <button type="button" class="pf-edit-remove-btn" title="Remover">×</button>
+      </div>`;
+    }
+
+    function funcaoRow(f) {
+      return `<div class="pf-edit-role-row">
+        <button type="button" class="pf-edit-remove-btn" style="position:absolute;top:10px;right:10px" title="Remover">×</button>
+        <div class="pf-edit-field"><label>Título</label><input type="text" value="${f.titulo}" placeholder="Ex: Marketing"/></div>
+        <div class="pf-edit-field"><label>Descrição</label><textarea rows="3">${f.desc}</textarea></div>
+      </div>`;
+    }
+
+    function bindRemove() {
+      pfBody.querySelectorAll('.pf-edit-remove-btn').forEach(btn => {
+        btn.onclick = () => btn.closest('.pf-edit-skill-row, .pf-edit-role-row').remove();
+      });
+    }
+
+    function pfClose() {
+      pfOverlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+      pfCurrent = null;
+    }
+
+    pfSaveBtn.addEventListener('click', () => {
+      const d = pfLoad();
+      if (pfCurrent === 'sobre') {
+        const txt = document.getElementById('pfSobre')?.value || '';
+        d.sobre = txt;
+        const el = document.querySelector('.pf-desc-text'); if (el) el.textContent = txt;
+      } else if (pfCurrent === 'informacoes') {
+        const cargo = document.getElementById('pfCargo')?.value || '';
+        const empresa = document.getElementById('pfEmpresa')?.value || '';
+        const email = document.getElementById('pfEmail')?.value || '';
+        const desde = document.getElementById('pfDesde')?.value || '';
+        d.informacoes = { cargo, empresa, email, desde };
+        const rows = document.querySelectorAll('.pf-about-row span');
+        if (rows[0]) rows[0].innerHTML = `<strong>Cargo:</strong> ${cargo}`;
+        if (rows[1]) rows[1].innerHTML = `<strong>Empresa:</strong> ${empresa}`;
+        if (rows[2]) rows[2].innerHTML = `<strong>Email:</strong> ${email}`;
+        if (rows[3]) rows[3].innerHTML = `<strong>Na empresa desde:</strong> ${desde}`;
+      } else if (pfCurrent === 'habilidades') {
+        const skills = Array.from(document.querySelectorAll('#pfSkillRows .pf-edit-skill-row')).map(r => {
+          const ins = r.querySelectorAll('input');
+          return { nome: ins[0]?.value||'', pct: Math.min(100,Math.max(0,+ins[1]?.value||0)), cor: ins[2]?.value||'#2389d7' };
+        }).filter(s => s.nome);
+        d.habilidades = skills; renderSkills(skills);
+      } else if (pfCurrent === 'funcoes') {
+        const funcoes = Array.from(document.querySelectorAll('#pfFuncaoRows .pf-edit-role-row')).map(r => {
+          const inp = r.querySelector('input'); const ta = r.querySelector('textarea');
+          return { titulo: inp?.value||'', desc: ta?.value||'' };
+        }).filter(f => f.titulo);
+        d.funcoes = funcoes; renderFuncoes(funcoes);
+      }
+      pfSave(d);
+      pfClose();
+    });
+
+    document.getElementById('pfEditClose').addEventListener('click', pfClose);
+    document.getElementById('pfEditCancel').addEventListener('click', pfClose);
+    pfOverlay.addEventListener('click', e => { if (e.target === pfOverlay) pfClose(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') pfClose(); });
+
+    // Wire edit buttons
+    document.querySelectorAll('.pf-card-edit').forEach(btn => {
+      const cardEl = btn.closest('.pf-card');
+      const t = cardEl?.querySelector('.pf-card-title')?.textContent.toLowerCase() || '';
+      let key = 'sobre';
+      if (t.includes('habilidade')) key = 'habilidades';
+      else if (t.includes('fun')) key = 'funcoes';
+      else if (t.includes('informa')) key = 'informacoes';
+      btn.addEventListener('click', () => pfOpen(key));
+    });
+  </script>
+
+</body>
+</html>

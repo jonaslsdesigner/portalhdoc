@@ -19,8 +19,8 @@
   --shadow: 0 8px 30px rgba(19, 54, 106, 0.08);
   --radius: 18px;
   --topbar-h: 154px;
-  --sidebar-w: 84px;
-  --sidebar-expanded: 220px;
+  --sidebar-w: 76px;
+  --sidebar-expanded: 240px;
   --content-gutter: 16px;
   --nav-offset: 72px;
   --font-title: "Roboto", sans-serif;
@@ -466,8 +466,8 @@ button {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 22px 11px;
+  gap: 8px;
+  padding: 16px 9px;
 }
 
 .sidebar-link {
@@ -475,17 +475,17 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0;
-  min-height: 46px;
-  padding: 10px 12px;
-  border-radius: 12px;
+  min-height: 40px;
+  padding: 8px 10px;
+  border-radius: 10px;
   color: var(--blue-deep);
   font-size: 14px;
   font-weight: 600;
 }
 
 .sidebar-link svg {
-  width: 22px;
-  height: 22px;
+  width: 19px;
+  height: 19px;
   flex-shrink: 0;
 }
 
@@ -712,7 +712,7 @@ button {
 .feature-header {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
   padding: 42px 52px 32px;
 }
 
@@ -1373,11 +1373,11 @@ button {
   border: none;
   border-radius: 0;
   box-shadow: none;
-  padding: 0 20px 0 52px;
+  padding: 0 16px 0 28px;
 }
 
 .calendar-panel {
-  width: 280px;
+  width: 210px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -1495,7 +1495,7 @@ button {
 
 /* ── Calendar meeting header ────────────────────────── */
 .cal-meeting-header .feature-header {
-  padding: 42px 52px 20px;
+  padding: 42px 20px 20px 52px;
   justify-content: flex-start;
 }
 
@@ -1584,11 +1584,38 @@ button {
 }
 
 .fc-event {
-  border-radius: 6px !important;
+  border-radius: 5px !important;
   font-size: 12px !important;
   font-weight: 600 !important;
-  padding: 2px 6px !important;
+  padding: 1px 5px !important;
   border: none !important;
+}
+
+.fc-day-grid-event .fc-content {
+  white-space: normal !important;
+  overflow: visible !important;
+  word-break: break-word;
+  line-height: 1.35;
+}
+
+.fc-day-grid-event {
+  overflow: visible !important;
+  height: auto !important;
+}
+
+/* Altura mínima uniforme para todas as linhas de semana */
+.fc-row.fc-week {
+  min-height: 110px !important;
+}
+
+.fc-row .fc-content-skeleton {
+  padding-bottom: 12px !important;
+  bottom: auto !important;
+}
+
+/* Eventos sempre no topo das células */
+#fullCalendar .fc-content-skeleton tbody td {
+  vertical-align: top !important;
 }
 
 .fc td, .fc th {
@@ -1851,6 +1878,10 @@ button {
 
 .cal-card-wrapper:hover .cal-edit-toggle,
 .cal-card-wrapper.edit-mode .cal-edit-toggle {
+  opacity: 1;
+}
+
+.cal-card-wrapper #calSaveImg {
   opacity: 1;
 }
 
@@ -2314,6 +2345,22 @@ button {
   font-size: 20px;
   margin-top: 4px;
   flex-shrink: 0;
+}
+
+/* ── Calendar tooltip ── */
+#cal-tooltip {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  background: #1f3d78;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 7px;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
 }
 
 /* ── Footer ─────────────────────────────────────────── */

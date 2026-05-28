@@ -71,6 +71,34 @@ document.querySelectorAll('.mobile-nav-item').forEach((item) => {
 window.addEventListener('resize', syncSidebarState, { passive: true });
 syncSidebarState();
 
+// Salvar imagem do calendário
+const calSaveBtn = document.getElementById('calSaveImg');
+if (calSaveBtn) {
+  calSaveBtn.addEventListener('click', function() {
+    const target = document.querySelector('.cal-card-wrapper');
+    if (!target) return;
+
+    calSaveBtn.style.visibility = 'hidden';
+
+    html2canvas(target, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#ffffff',
+      logging: false,
+    }).then(function(canvas) {
+      calSaveBtn.style.visibility = '';
+      const month = (document.getElementById('calMeetingMonth') || {}).textContent || 'Calendario';
+      const link = document.createElement('a');
+      link.download = 'Calendario-' + month.trim().replace(/\s+/g, '-') + '.png';
+      link.href = canvas.toDataURL('image/png');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  });
+}
+
 function initFullCalendar() {
   const calEl = $('#fullCalendar');
   if (calEl.length === 0) return;
@@ -205,6 +233,9 @@ function initFullCalendar() {
     editable: false,
     selectable: false,
     eventLimit: true,
+    eventRender: function(event, element) {
+      element.attr('title', event.title);
+    },
     select(start, end) {
       _pendingSelect = { start, end };
       _editEvent = null;

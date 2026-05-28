@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configurações — Portal HDOC Saúde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Configurações Page ─────────────────────────── */
+    .cfg-hero {
+      position: relative;
+      width: 100%;
+      padding: 52px var(--content-gutter);
+      background: linear-gradient(135deg, #1a6dbf 0%, #2389d7 60%, #3aa3e8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .cfg-hero::before {
+      content: "Configurações";
+      position: absolute;
+      font-family: var(--font-title);
+      font-size: 130px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.07);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+    .cfg-hero-title {
+      font-family: var(--font-title);
+      font-size: 36px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.02em;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Layout */
+    .cfg-page {
+      padding: 48px var(--content-gutter) 100px;
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+    }
+
+    /* Left nav */
+    .cfg-nav {
+      width: 280px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: sticky;
+      top: calc(var(--topbar-h) + 24px);
+    }
+
+    .cfg-user-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 22px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: var(--shadow);
+      margin-bottom: 8px;
+    }
+
+    .cfg-user-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--blue-soft);
+      flex-shrink: 0;
+    }
+
+    .cfg-user-name {
+      font-family: var(--font-title);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--blue-deep);
+    }
+
+    .cfg-user-since {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Nav groups */
+    .cfg-nav-group {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .cfg-nav-group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .cfg-nav-group-header:hover { background: var(--bg); }
+
+    .cfg-nav-group-info { display: flex; flex-direction: column; gap: 2px; }
+
+    .cfg-nav-group-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue-deep);
+      font-family: var(--font-title);
+    }
+
+    .cfg-nav-group-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .cfg-nav-group-arrow {
+      color: var(--muted);
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .cfg-nav-group.is-open .cfg-nav-group-arrow { transform: rotate(180deg); }
+
+    .cfg-nav-items {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      border-top: 0px solid var(--line);
+    }
+    .cfg-nav-group.is-open .cfg-nav-items {
+      max-height: 400px;
+      border-top-width: 1px;
+    }
+
+    .cfg-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 18px 11px 22px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      border-bottom: 1px solid var(--bg);
+      transition: background 0.12s, color 0.12s;
+    }
+    .cfg-nav-item:last-child { border-bottom: none; }
+    .cfg-nav-item:hover { background: var(--blue-soft); color: var(--blue-brand); }
+    .cfg-nav-item.is-active {
+      background: var(--blue-soft);
+      color: var(--blue-brand);
+      font-weight: 700;
+      border-left: 3px solid var(--blue-brand);
+      padding-left: 19px;
+    }
+    .cfg-nav-item svg { flex-shrink: 0; }
+
+    /* Main content */
+    .cfg-main {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .cfg-section { display: none; flex-direction: column; gap: 0; }
+    .cfg-section.is-active { display: flex; }
+
+    /* Section header */
+    .cfg-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 14px 14px 0 0;
+      padding: 18px 28px;
+      border-bottom: none;
+      box-shadow: var(--shadow);
+    }
+
+    .cfg-section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-title);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--blue-brand);
+    }
+
+    .cfg-save-btn {
+      padding: 10px 24px;
+      background: var(--blue-brand);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: opacity 0.2s;
+    }
+    .cfg-save-btn:hover { opacity: 0.88; }
+
+    /* Form body */
+    .cfg-form-body {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 0 0 14px 14px;
+      padding: 28px 28px 32px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Field */
+    .cfg-field { display: flex; flex-direction: column; gap: 8px; }
+
+    .cfg-field-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-title);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .cfg-required-badge {
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--blue-brand);
+      color: #fff;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .cfg-field input,
+    .cfg-field textarea,
+    .cfg-field select {
+      padding: 11px 16px;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--white);
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+    .cfg-field input:focus,
+    .cfg-field textarea:focus,
+    .cfg-field select:focus {
+      border-color: var(--blue-brand);
+      outline: none;
+    }
+    .cfg-field textarea { resize: vertical; }
+
+    .cfg-field-hint {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .cfg-visibility {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      background: var(--bg);
+      border-left: 3px solid var(--blue-brand);
+      border-radius: 0 6px 6px 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .cfg-visibility strong { color: var(--blue-deep); font-weight: 600; }
+
+    /* Date row */
+    .cfg-date-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .cfg-date-row label { font-size: 12px; color: var(--muted); margin-bottom: 4px; display: block; }
+    .cfg-date-row select { width: auto; }
+
+    /* Divider */
+    .cfg-divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 4px 0;
+    }
+
+    /* Password field */
+    .cfg-pw-row {
+      display: flex;
+      gap: 16px;
+    }
+    .cfg-pw-row .cfg-field { flex: 1; }
+
+    /* Toggle */
+    .cfg-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--bg);
+    }
+    .cfg-toggle-row:last-child { border-bottom: none; }
+
+    .cfg-toggle-info h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--blue-deep);
+      margin-bottom: 3px;
+    }
+    .cfg-toggle-info p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .cfg-toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .cfg-toggle input { display: none; }
+    .cfg-toggle-track {
+      position: absolute;
+      inset: 0;
+      background: #dde4ed;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cfg-toggle input:checked + .cfg-toggle-track { background: var(--blue-brand); }
+    .cfg-toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 18px;
+      height: 18px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+    .cfg-toggle input:checked + .cfg-toggle-track::after { transform: translateX(20px); }
+
+    /* Toast */
+    .cfg-toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--blue-deep);
+      color: #fff;
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.2);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .cfg-toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 900px) {
+      .cfg-page { flex-direction: column; }
+      .cfg-nav { width: 100%; position: static; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar" id="topbar">
+    <div class="topbar-primary">
+      <div class="topbar-primary-spacer"></div>
+      <div class="topbar-actions">
+        <button class="action-btn" aria-label="Mensagens">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </button>
+        <button class="action-btn" aria-label="Notificações">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+        <div class="user-avatar" id="userAvatar">
+          <img src="ARQUIVOS/FOTOS%20PERFIL/JONAS%20PERFIL.png" alt="Jonas Lima" />
+          <span class="user-name">Jonas Lima</span>
+          <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+          <div class="user-dropdown">
+            <div class="user-dropdown-header">Sua Conta</div>
+            <a href="perfil.html">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              Meu Perfil
+            </a>
+            <a href="configuracoes.html">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M4.93 4.93a10 10 0 0 0 14.14 14.14"/></svg>
+              Configurações
+            </a>
+            <a href="#">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              Meus Grupos
+            </a>
+            <a href="#">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Calendário
+            </a>
+            <hr />
+            <a href="index.html" class="logout">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+              Sair
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topbar-secondary">
+      <div class="topbar-logo">
+        <img src="ARQUIVOS/Portal-HDOC-Saúde---Arquivos.png" alt="Portal HDOC Saúde" class="logo-full-img" />
+      </div>
+      <nav class="topbar-nav" id="topbarNav">
+        <a href="index.html" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Início</a>
+        <a href="https://192.168.4.181/" class="nav-link" target="_blank" rel="noopener noreferrer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>SSD</a>
+        <a href="gestao-agil.html" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>Gestão Ágil</a>
+        <div class="nav-dropdown">
+          <a href="#" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>Governança <svg width="10" height="6" viewBox="0 0 10 6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></a>
+          <div class="dropdown-menu">
+            <a href="organogramas.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><rect x="1" y="14" width="6" height="4" rx="1"/><rect x="9" y="14" width="6" height="4" rx="1"/><rect x="17" y="14" width="6" height="4" rx="1"/><path d="M4 14V9h16v5M12 6v3"/></svg>Organogramas</a>
+            <a href="politicas.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Políticas</a>
+            <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Conselho de Administração</a>
+            <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M20 8h2M2 8h2"/></svg>Comitês</a>
+            <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Setores</a>
+          </div>
+        </div>
+        <a href="#" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Negócios</a>
+      </nav>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-pin-btn" id="sidebarPinBtn" title="Fixar menu">
+      <svg class="pin-icon-expand" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17l5-5-5-5"/><path d="M13 17l5-5-5-5"/></svg>
+      <span class="pin-label">INTRANET</span>
+      <svg class="pin-icon-collapse" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-5-5 5-5"/><path d="M18 17l-5-5 5-5"/></svg>
+    </button>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="sidebar-link" title="Feed de Notícias">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 8h10M7 12h7"/><path d="M8 20h8"/></svg>
+        <span>Feed de Notícias</span>
+      </a>
+      <a href="perfil.html" class="sidebar-link" title="Membros">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span>Membros</span>
+      </a>
+      <a href="#" class="sidebar-link" title="Grupos">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Grupos</span>
+      </a>
+      <a href="#" class="sidebar-link active" title="Configurações">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M4.93 4.93a10 10 0 0 0 14.14 14.14"/></svg>
+        <span>Configurações</span>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="main-content" id="mainContent">
+
+    <div class="cfg-hero">
+      <h1 class="cfg-hero-title">Configurações</h1>
+    </div>
+
+    <div class="cfg-page">
+
+      <!-- Left nav -->
+      <nav class="cfg-nav">
+
+        <div class="cfg-user-card">
+          <img class="cfg-user-avatar" src="ARQUIVOS/FOTOS%20PERFIL/JONAS%20PERFIL.png" alt="Jonas Lima" />
+          <div>
+            <div class="cfg-user-name">Jonas Lima</div>
+            <div class="cfg-user-since">Membro desde 2025</div>
+          </div>
+        </div>
+
+        <!-- Grupo: Perfil -->
+        <div class="cfg-nav-group is-open" id="navGrupoPerfil">
+          <div class="cfg-nav-group-header">
+            <div class="cfg-nav-group-info">
+              <span class="cfg-nav-group-title">Configurações do Perfil</span>
+              <span class="cfg-nav-group-sub">Campos de informações do perfil</span>
+            </div>
+            <svg class="cfg-nav-group-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="cfg-nav-items">
+            <div class="cfg-nav-item is-active" data-section="informacoes">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              Informações do perfil
+            </div>
+            <div class="cfg-nav-item" data-section="quem-sou">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Quem sou eu?
+            </div>
+            <div class="cfg-nav-item" data-section="jornada">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+              Jornada na empresa
+            </div>
+            <div class="cfg-nav-item" data-section="contatos">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.63 19a19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-2-8.72A2 2 0 0 1 5.44 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.77 9.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Contatos
+            </div>
+          </div>
+        </div>
+
+        <!-- Grupo: Conta -->
+        <div class="cfg-nav-group" id="navGrupoConta">
+          <div class="cfg-nav-group-header">
+            <div class="cfg-nav-group-info">
+              <span class="cfg-nav-group-title">Configurações da Conta</span>
+              <span class="cfg-nav-group-sub">E-mail, senha, notificações...</span>
+            </div>
+            <svg class="cfg-nav-group-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="cfg-nav-items">
+            <div class="cfg-nav-item" data-section="conta-email">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              E-mail
+            </div>
+            <div class="cfg-nav-item" data-section="conta-senha">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Senha
+            </div>
+            <div class="cfg-nav-item" data-section="notificacoes">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              Notificações
+            </div>
+          </div>
+        </div>
+
+        <!-- Grupo: Privacidade -->
+        <div class="cfg-nav-group" id="navGrupoPriv">
+          <div class="cfg-nav-group-header">
+            <div class="cfg-nav-group-info">
+              <span class="cfg-nav-group-title">Privacidade</span>
+              <span class="cfg-nav-group-sub">Visibilidade e permissões</span>
+            </div>
+            <svg class="cfg-nav-group-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="cfg-nav-items">
+            <div class="cfg-nav-item" data-section="privacidade">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Configurações de privacidade
+            </div>
+          </div>
+        </div>
+
+      </nav>
+
+      <!-- Main content -->
+      <div class="cfg-main">
+
+        <!-- Informações do perfil -->
+        <div class="cfg-section is-active" id="sec-informacoes">
+          <div class="cfg-section-header">
+            <div class="cfg-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              Informações do perfil
+            </div>
+            <button class="cfg-save-btn" data-section="informacoes">Salvar Alterações</button>
+          </div>
+          <div class="cfg-form-body">
+            <div class="cfg-field">
+              <label class="cfg-field-label">Nome <span class="cfg-required-badge">Obrigatório</span></label>
+              <input type="text" id="cfg-nome" placeholder="Seu nome" />
+              <div class="cfg-visibility"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Este campo pode ser visto por <strong>Todos</strong></div>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-field-label">Sobrenome <span class="cfg-required-badge">Obrigatório</span></label>
+              <input type="text" id="cfg-sobrenome" placeholder="Seu sobrenome" />
+              <div class="cfg-visibility"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Este campo pode ser visto por <strong>Todos</strong></div>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-field-label">Data de Nascimento</label>
+              <div class="cfg-date-row">
+                <div><label>Dia</label><select id="cfg-dia"><option value="">—</option></select></div>
+                <div><label>Mês</label><select id="cfg-mes"><option value="">—</option><option>Janeiro</option><option>Fevereiro</option><option>Março</option><option>Abril</option><option>Maio</option><option>Junho</option><option>Julho</option><option>Agosto</option><option>Setembro</option><option>Outubro</option><option>Novembro</option><option>Dezembro</option></select></div>
+                <div><label>Ano</label><select id="cfg-ano"><option value="">—</option></select></div>
+              </div>
+              <div class="cfg-visibility"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Este campo pode ser visto por <strong>Todos</strong></div>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-field-label">Localização</label>
+              <input type="text" id="cfg-local" placeholder="Ex: Recife, PE" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Quem sou eu -->
+        <div class="cfg-section" id="sec-quem-sou">
+          <div class="cfg-section-header">
+            <div class="cfg-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Quem sou eu?
+            </div>
+            <button class="cfg-save-btn" data-section="quem-sou">Salvar Alterações</button>
+          </div>
+          <div class="cfg-form-body">
+            <div class="cfg-field">
+              <label class="cfg-field-label">Sobre mim</label>
+              <textarea id="cfg-bio" rows="5" placeholder="Fale um pouco sobre você, suas habilidades e experiências..."></textarea>
+              <span class="cfg-field-hint">Máximo 500 caracteres. Visível para todos no portal.</span>
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-field-label">Interesses</label>
+              <input type="text" id="cfg-interesses" placeholder="Ex: Design, Gestão, Inovação..." />
+              <span class="cfg-field-hint">Separe por vírgulas.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Jornada na empresa -->
+        <div class="cfg-section" id="sec-jornada">
+          <div class="cfg-section-header">
+            <div class="cfg-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+              Jornada na empresa
+            </div>
+            <button class="cfg-save-btn" data-section="jornada">Salvar Alterações</button>
+          </div>
+          <div class="cfg-form-body">
+            <div class="cfg-field">
+              <label class="cfg-field-label">Cargo <span class="cfg-required-badge">Obrigatório</span></label>
+              <input type="text" id="cfg-cargo" placeholder="Ex: Designer Gráfico" />
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-field-label">Departamento</label>
+              <input type="text" id="cfg-depto" placeholder="Ex: Marketing & Governança" />
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-field-label">Empresa</label>
+              <input type="text" id="cfg-empresa" placeholder="Ex: Grupo HDOC Saúde" />
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-field-label">Na empresa desde</label>
+              <input type="text" id="cfg-desde" placeholder="Ex: 2024" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Contatos -->
+        <div class="cfg-section" id="sec-contatos">
+          <div class="cfg-section-header">
+            <div class="cfg-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.63 19a19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-2-8.72A2 2 0 0 1 5.44 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.77 9.91a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Contatos
+            </div>
+            <button class="cfg-save-btn" data-section="contatos">Salvar Alterações</button>
+          </div>
+          <div class="cfg-form-body">
+            <div class="cfg-field">
+              <label class="cfg-field-label">Telefone</label>
+              <input type="tel" id="cfg-telefone" placeholder="(00) 00000-0000" />
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-field-label">E-mail de contato</label>
+              <input type="email" id="cfg-email-contato" placeholder="seu@email.com" />
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-field-label">LinkedIn</label>
+              <input type="url" id="cfg-linkedin" placeholder="linkedin.com/in/seu-perfil" />
+            </div>
+          </div>
+        </div>
+
+        <!-- E-mail da conta -->
+        <div class="cfg-section" id="sec-conta-email">
+          <div class="cfg-section-header">
+            <div class="cfg-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              E-mail da conta
+            </div>
+            <button class="cfg-save-btn" data-section="conta-email">Salvar Alterações</button>
+          </div>
+          <div class="cfg-form-body">
+            <div class="cfg-field">
+              <label class="cfg-field-label">E-mail atual</label>
+              <input type="email" id="cfg-email-atual" placeholder="email@hdoc.com.br" />
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-field-label">Novo e-mail</label>
+              <input type="email" id="cfg-email-novo" placeholder="novo@email.com" />
+            </div>
+            <div class="cfg-field">
+              <label class="cfg-field-label">Confirmar novo e-mail</label>
+              <input type="email" id="cfg-email-conf" placeholder="Confirme o novo e-mail" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Senha -->
+        <div class="cfg-section" id="sec-conta-senha">
+          <div class="cfg-section-header">
+            <div class="cfg-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Alterar senha
+            </div>
+            <button class="cfg-save-btn" data-section="conta-senha">Salvar Alterações</button>
+          </div>
+          <div class="cfg-form-body">
+            <div class="cfg-field">
+              <label class="cfg-field-label">Senha atual</label>
+              <input type="password" id="cfg-senha-atual" placeholder="••••••••" />
+            </div>
+            <div class="cfg-pw-row">
+              <div class="cfg-field">
+                <label class="cfg-field-label">Nova senha</label>
+                <input type="password" id="cfg-senha-nova" placeholder="••••••••" />
+              </div>
+              <div class="cfg-field">
+                <label class="cfg-field-label">Confirmar nova senha</label>
+                <input type="password" id="cfg-senha-conf" placeholder="••••••••" />
+              </div>
+            </div>
+            <span class="cfg-field-hint">Mínimo de 8 caracteres com letras e números.</span>
+          </div>
+        </div>
+
+        <!-- Notificações -->
+        <div class="cfg-section" id="sec-notificacoes">
+          <div class="cfg-section-header">
+            <div class="cfg-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              Notificações
+            </div>
+            <button class="cfg-save-btn" data-section="notificacoes">Salvar</button>
+          </div>
+          <div class="cfg-form-body">
+            <div class="cfg-toggle-row">
+              <div class="cfg-toggle-info">
+                <h4>Notificações do portal</h4>
+                <p>Receba avisos sobre novidades, publicações e atualizações.</p>
+              </div>
+              <label class="cfg-toggle"><input type="checkbox" id="ntf-portal" checked /><span class="cfg-toggle-track"></span></label>
+            </div>
+            <div class="cfg-toggle-row">
+              <div class="cfg-toggle-info">
+                <h4>Mensagens diretas</h4>
+                <p>Notificações quando receber mensagens de outros membros.</p>
+              </div>
+              <label class="cfg-toggle"><input type="checkbox" id="ntf-msg" checked /><span class="cfg-toggle-track"></span></label>
+            </div>
+            <div class="cfg-toggle-row">
+              <div class="cfg-toggle-info">
+                <h4>Aniversários</h4>
+                <p>Lembrete de aniversários de colegas.</p>
+              </div>
+              <label class="cfg-toggle"><input type="checkbox" id="ntf-aniv" /><span class="cfg-toggle-track"></span></label>
+            </div>
+            <div class="cfg-toggle-row">
+              <div class="cfg-toggle-info">
+                <h4>Calendário de reuniões</h4>
+                <p>Alertas de novos eventos adicionados ao calendário.</p>
+              </div>
+              <label class="cfg-toggle"><input type="checkbox" id="ntf-cal" checked /><span class="cfg-toggle-track"></span></label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Privacidade -->
+        <div class="cfg-section" id="sec-privacidade">
+          <div class="cfg-section-header">
+            <div class="cfg-section-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Privacidade
+            </div>
+            <button class="cfg-save-btn" data-section="privacidade">Salvar</button>
+          </div>
+          <div class="cfg-form-body">
+            <div class="cfg-toggle-row">
+              <div class="cfg-toggle-info">
+                <h4>Mostrar perfil publicamente</h4>
+                <p>Seu perfil será visível para todos os membros do portal.</p>
+              </div>
+              <label class="cfg-toggle"><input type="checkbox" id="prv-perfil" checked /><span class="cfg-toggle-track"></span></label>
+            </div>
+            <div class="cfg-toggle-row">
+              <div class="cfg-toggle-info">
+                <h4>Mostrar status online</h4>
+                <p>Outros membros poderão ver quando você está ativo.</p>
+              </div>
+              <label class="cfg-toggle"><input type="checkbox" id="prv-online" checked /><span class="cfg-toggle-track"></span></label>
+            </div>
+            <div class="cfg-toggle-row">
+              <div class="cfg-toggle-info">
+                <h4>Exibir e-mail no perfil</h4>
+                <p>Seu e-mail ficará visível na aba de informações.</p>
+              </div>
+              <label class="cfg-toggle"><input type="checkbox" id="prv-email" /><span class="cfg-toggle-track"></span></label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast -->
+  <div class="cfg-toast" id="cfgToast">✓ Alterações salvas com sucesso!</div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="ARQUIVOS/Portal-HDOC-Saúde---Arquivos.png" alt="Portal HDOC Saúde" class="footer-logo" />
+        <p class="footer-desc">Aqui, você acompanha as novidades da empresa, participa de grupos e contribui para um ambiente corporativo mais conectado e colaborativo.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/grupohdocsaude/" class="footer-social-btn" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://grupohdocsaude.com.br/" class="footer-social-btn" aria-label="Site" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </a>
+          <a href="https://192.168.4.181/" class="footer-social-btn" aria-label="SSD" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Páginas</h4>
+          <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="gestao-agil.html">Gestão Ágil</a></li>
+            <li><a href="organogramas.html">Organogramas</a></li>
+            <li><a href="politicas.html">Políticas</a></li>
+            <li><a href="perfil.html">Meu Perfil</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Portal</h4>
+          <ul>
+            <li><a href="https://192.168.4.181/" target="_blank" rel="noopener noreferrer">SSD</a></li>
+            <li><a href="organogramas.html">Governança</a></li>
+            <li><a href="#">Negócios</a></li>
+            <li><a href="#">Membros</a></li>
+            <li><a href="#">Grupos</a></li>
+            <li><a href="#">Artigos</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Portal HDOC Saúde — Todos os direitos reservados
+    </div>
+  </footer>
+
+  <script>
+    'use strict';
+
+    const sidebar = document.getElementById('sidebar');
+    const sidebarPinBtn = document.getElementById('sidebarPinBtn');
+    if (sidebarPinBtn) {
+      sidebarPinBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('sidebar-pinned');
+        sidebarPinBtn.title = sidebar.classList.contains('sidebar-pinned') ? 'Minimizar menu' : 'Fixar menu';
+      });
+    }
+
+    const topbar = document.getElementById('topbar');
+    window.addEventListener('scroll', () => {
+      topbar.style.boxShadow = window.scrollY > 10
+        ? '0 2px 20px rgba(0,87,184,.12)'
+        : '0 1px 3px rgba(0,0,0,.06)';
+    }, { passive: true });
+
+    // Populate day/year selects
+    const diaEl = document.getElementById('cfg-dia');
+    const anoEl = document.getElementById('cfg-ano');
+    for (let d = 1; d <= 31; d++) { const o = document.createElement('option'); o.value = d; o.textContent = d; diaEl.appendChild(o); }
+    const curYear = new Date().getFullYear();
+    for (let y = curYear; y >= 1940; y--) { const o = document.createElement('option'); o.value = y; o.textContent = y; anoEl.appendChild(o); }
+
+    // Nav group accordion
+    document.querySelectorAll('.cfg-nav-group-header').forEach(header => {
+      header.addEventListener('click', () => {
+        header.closest('.cfg-nav-group').classList.toggle('is-open');
+      });
+    });
+
+    // Nav item selection
+    document.querySelectorAll('.cfg-nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.cfg-nav-item').forEach(i => i.classList.remove('is-active'));
+        item.classList.add('is-active');
+        const sec = item.dataset.section;
+        document.querySelectorAll('.cfg-section').forEach(s => s.classList.remove('is-active'));
+        document.getElementById('sec-' + sec)?.classList.add('is-active');
+        // Open parent group if closed
+        const group = item.closest('.cfg-nav-group');
+        if (group && !group.classList.contains('is-open')) group.classList.add('is-open');
+      });
+    });
+
+    // localStorage key
+    const CFG_KEY = 'cfgSettings';
+    const cfgLoad = () => { try { return JSON.parse(localStorage.getItem(CFG_KEY)) || {}; } catch { return {}; } };
+    const cfgSave = d => localStorage.setItem(CFG_KEY, JSON.stringify(d));
+
+    // Field map: id → storage key
+    const FIELDS = {
+      'cfg-nome': 'nome', 'cfg-sobrenome': 'sobrenome', 'cfg-dia': 'dia',
+      'cfg-mes': 'mes', 'cfg-ano': 'ano', 'cfg-local': 'local',
+      'cfg-bio': 'bio', 'cfg-interesses': 'interesses',
+      'cfg-cargo': 'cargo', 'cfg-depto': 'depto', 'cfg-empresa': 'empresa', 'cfg-desde': 'desde',
+      'cfg-telefone': 'telefone', 'cfg-email-contato': 'emailContato', 'cfg-linkedin': 'linkedin',
+      'cfg-email-atual': 'emailAtual',
+    };
+    const TOGGLES = { 'ntf-portal': 'ntfPortal', 'ntf-msg': 'ntfMsg', 'ntf-aniv': 'ntfAniv', 'ntf-cal': 'ntfCal', 'prv-perfil': 'prvPerfil', 'prv-online': 'prvOnline', 'prv-email': 'prvEmail' };
+
+    // Load saved values
+    (function loadSaved() {
+      const d = cfgLoad();
+      Object.entries(FIELDS).forEach(([id, key]) => {
+        const el = document.getElementById(id);
+        if (el && d[key] !== undefined) el.value = d[key];
+      });
+      Object.entries(TOGGLES).forEach(([id, key]) => {
+        const el = document.getElementById(id);
+        if (el && d[key] !== undefined) el.checked = d[key];
+      });
+    })();
+
+    // Save
+    function showToast() {
+      const toast = document.getElementById('cfgToast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    document.querySelectorAll('.cfg-save-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const d = cfgLoad();
+        Object.entries(FIELDS).forEach(([id, key]) => {
+          const el = document.getElementById(id);
+          if (el) d[key] = el.value;
+        });
+        Object.entries(TOGGLES).forEach(([id, key]) => {
+          const el = document.getElementById(id);
+          if (el) d[key] = el.checked;
+        });
+        cfgSave(d);
+        showToast();
+      });
+    });
+  </script>
+
+</body>
+</html>
