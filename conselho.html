@@ -3,35 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Políticas — Portal HDOC Saúde</title>
+  <title>Conselho de Administração — Portal HDOC Saúde</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* ── Políticas Page ─────────────────────────────── */
-    .pol-page {
+    /* ── Conselho de Administração Page ─────────────────────────────── */
+    .ca-page {
       padding: 80px var(--content-gutter) 100px;
     }
 
-    /* Intro */
-    .pol-intro {
+    .ca-intro {
       display: flex;
       gap: 48px;
       align-items: center;
-      margin: 0 auto 80px;
+      margin: 0 auto 120px;
       max-width: 1100px;
     }
 
-    .pol-intro-img {
-      flex: 0 0 480px;
-      width: 480px;
-      height: 320px;
+    .ca-intro-img {
+      flex: 0 0 500px;
+      width: 500px;
+      height: auto;
       object-fit: cover;
       border-radius: 12px;
     }
 
-    .pol-intro-body h2 {
+    .ca-intro-body h2 {
+      font-family: var(--font-title);
+      font-size: 25px;
+      font-weight: 700;
+      color: var(--blue-brand);
+      margin-bottom: 14px;
+    }
+
+    .ca-intro-body p {
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    .ca-central {
+      margin: 0 auto 100px;
+      max-width: 1100px;
+      text-align: center;
+    }
+
+    .ca-central h2 {
       font-family: var(--font-title);
       font-size: 25px;
       font-weight: 700;
@@ -39,165 +59,82 @@
       margin-bottom: 16px;
     }
 
-    .pol-intro-body p {
+    .ca-central p {
       font-size: 16px;
+      color: var(--text);
+      line-height: 1.75;
+    }
+
+    .ca-tabs {
+      display: flex;
+      gap: 12px;
+      margin: 0 auto 64px;
+      max-width: 1100px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .ca-tab-btn {
+      padding: 12px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .ca-tab-btn:hover {
+      border-color: var(--blue-brand);
+      color: var(--blue-brand);
+    }
+
+    .ca-tab-btn.is-active {
+      background: var(--blue-brand);
+      color: #fff;
+      border-color: var(--blue-brand);
+    }
+
+    .ca-tab-panel { display: none; }
+    .ca-tab-panel.is-active { display: block; }
+
+    .ca-tab-content {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .ca-tab-img {
+      flex: 0 0 500px;
+      width: 500px;
+      height: auto;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .ca-tab-body h3 {
+      font-family: var(--font-title);
+      font-size: 25px;
+      font-weight: 700;
+      color: var(--blue-brand);
+      margin-bottom: 14px;
+    }
+
+    .ca-tab-body p {
+      font-size: 14px;
       color: var(--text);
       line-height: 1.75;
       margin-bottom: 12px;
     }
 
-    .pol-intro-body p:last-of-type { margin-bottom: 20px; }
+    .ca-tab-body p:last-child { margin-bottom: 0; }
 
-    .pol-gov-logo {
-      height: 56px;
-      width: auto;
-      object-fit: contain;
-    }
-
-    /* Cards */
-    .pol-cards {
-      display: flex;
-      gap: 32px;
-    }
-
-    .pol-card {
-      flex: 1;
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 72px 32px 76px;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .pol-card-logo {
-      height: 80px;
-      width: 50%;
-      max-width: 100%;
-      object-fit: contain;
-      margin-bottom: 20px;
-    }
-
-    .pol-card-desc {
-      font-size: 15px;
-      color: var(--muted);
-      text-align: center;
-      margin-bottom: 28px;
-      line-height: 1.6;
-    }
-
-    /* Accordion */
-    .pol-accordion {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .pol-item {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-
-    .pol-item-header {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      width: 100%;
-      padding: 16px 20px;
-      background: #f5f6f8;
-      border: none;
-      cursor: pointer;
-      text-align: left;
-      transition: background 0.15s;
-    }
-
-    .pol-item-header:hover { background: #edf0f4; }
-
-    .pol-item.is-open .pol-item-header { background: #edf0f4; }
-
-    .pol-item-toggle {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--blue-deep);
-      line-height: 1;
-      flex-shrink: 0;
-      width: 20px;
-      text-align: center;
-    }
-
-    .pol-item-title {
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--blue-deep);
-    }
-
-    .pol-item-body {
-      display: grid;
-      grid-template-rows: 0fr;
-      background: var(--white);
-      transition: grid-template-rows 0.36s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .pol-item.is-open .pol-item-body {
-      grid-template-rows: 1fr;
-    }
-
-    .pol-item-body-inner {
-      overflow: hidden;
-      padding: 0 20px 0 58px;
-      border-top: 0px solid var(--line);
-      transition: padding 0.36s cubic-bezier(0.4, 0, 0.2, 1),
-                  border-top-width 0.36s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .pol-item.is-open .pol-item-body-inner {
-      padding: 14px 20px 16px 58px;
-      border-top-width: 1px;
-    }
-
-    .pol-doc {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 9px 0;
-      border-bottom: 1px solid #f0f1f3;
-      transition: opacity 0.15s;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .pol-doc:last-child { border-bottom: none; }
-    .pol-doc:hover { opacity: 0.7; }
-
-    .pol-doc-date {
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--muted);
-      white-space: nowrap;
-      font-family: var(--font-body);
-      flex-shrink: 0;
-    }
-
-    .pol-doc-name {
-      font-size: 14px;
-      font-weight: 700;
-      font-family: var(--font-body);
-      color: var(--blue-deep);
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      transition: color 0.15s;
-    }
-
-    .pol-doc:hover .pol-doc-name { color: var(--blue-brand); }
-    .pol-doc:hover .pol-doc-date { color: var(--blue-brand); }
-
-    /* Hero */
-    .pol-hero {
+    .ca-hero {
       position: relative;
       width: 100%;
       padding: 52px var(--content-gutter);
@@ -206,10 +143,11 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      margin-bottom: 0;
     }
 
-    .pol-hero::before {
-      content: "Políticas";
+    .ca-hero::before {
+      content: "Conselho";
       position: absolute;
       font-family: var(--font-title);
       font-size: 160px;
@@ -221,7 +159,7 @@
       user-select: none;
     }
 
-    .pol-hero-title {
+    .ca-hero-title {
       font-family: var(--font-title);
       font-size: 36px;
       font-weight: 700;
@@ -232,9 +170,8 @@
     }
 
     @media (max-width: 860px) {
-      .pol-intro  { flex-direction: column; }
-      .pol-intro-img { width: 100%; flex: none; height: 220px; }
-      .pol-cards  { flex-direction: column; }
+      .ca-intro, .ca-tab-content { flex-direction: column; }
+      .ca-intro-img, .ca-tab-img { width: 100%; flex: none; height: 200px; }
     }
   </style>
 </head>
@@ -259,7 +196,7 @@
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
               Meu Perfil
             </a>
-            <a href="#">
+            <a href="configuracoes.html">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M4.93 4.93a10 10 0 0 0 14.14 14.14"/></svg>
               Configurações
             </a>
@@ -294,12 +231,12 @@
           <div class="dropdown-menu">
             <a href="organogramas.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1"/><rect x="1" y="14" width="6" height="4" rx="1"/><rect x="9" y="14" width="6" height="4" rx="1"/><rect x="17" y="14" width="6" height="4" rx="1"/><path d="M4 14V9h16v5M12 6v3"/></svg>Organogramas</a>
             <a href="politicas.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Políticas</a>
-            <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Conselho de Administração</a>
-            <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M20 8h2M2 8h2"/></svg>Comitês</a>
-            <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Setores</a>
+            <a href="conselho.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Conselho de Administração</a>
+            <a href="comites.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M20 8h2M2 8h2"/></svg>Comitês</a>
+            <a href="setores.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Setores</a>
           </div>
         </div>
-        <a href="#" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Negócios</a>
+        <a href="negocios.html" class="nav-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Negócios</a>
       </nav>
     </div>
   </header>
@@ -315,15 +252,15 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 8h10M7 12h7"/><path d="M8 20h8"/></svg>
         <span>Feed de Notícias</span>
       </a>
-      <a href="#" class="sidebar-link" title="Membros">
+      <a href="membros.html" class="sidebar-link" title="Membros">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         <span>Membros</span>
       </a>
-      <a href="#" class="sidebar-link" title="Grupos">
+      <a href="grupos.html" class="sidebar-link" title="Grupos">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         <span>Grupos</span>
       </a>
-      <a href="#" class="sidebar-link" title="Artigos">
+      <a href="artigos.html" class="sidebar-link" title="Artigos">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
         <span>Artigos</span>
       </a>
@@ -331,177 +268,87 @@
   </aside>
 
   <main class="main-content" id="mainContent">
-
-    <div class="pol-hero">
-      <h1 class="pol-hero-title">Políticas</h1>
+    <div class="ca-hero">
+      <h1 class="ca-hero-title">Conselho de Administração</h1>
     </div>
-
-    <div class="pol-page">
+    <div class="ca-page">
 
       <!-- Intro -->
-      <div class="pol-intro">
-        <img
-          class="pol-intro-img"
-          src="ARQUIVOS/POLITICAS/NOSSOS DOC.jpeg"
-          alt="Documentos Institucionais"
-        />
-        <div class="pol-intro-body">
-          <h2>Nossos Documentos<br>Institucionais</h2>
-          <p>Aqui você encontra os <strong>documentos institucionais</strong> que orientam nossas decisões, condutas e processos.</p>
-          <p>Esses documentos estabelecem diretrizes claras para garantir <strong>conformidade, ética, transparência e boas práticas</strong> em todas as atividades. Consulte sempre que precisar.</p>
-          <img
-            class="pol-gov-logo"
-            src="ARQUIVOS/POLITICAS/logo-governanca.png"
-            alt="Diretoria de Governança"
-            onerror="this.style.display='none'"
-          />
+      <div class="ca-intro">
+        <img class="ca-intro-img" src="ARQUIVOS/ORGANOGRAMAS/Hierarquia.jpeg" alt="Conselho de Administração" />
+        <div class="ca-intro-body">
+          <h2>O que é o Conselho de Administração?</h2>
+          <p>O Conselho de Administração é o <strong>órgão máximo de governança</strong> do Grupo HDOC Saúde e da Coaph, responsável por definir as diretrizes estratégicas, supervisionar a gestão executiva e zelar pelos interesses de todos os colaboradores, cooperados e partes interessadas.</p>
+          <p>Composto por membros eleitos, o Conselho atua com <strong>independência, transparência e responsabilidade</strong>, assegurando que as decisões da organização estejam sempre alinhadas com os valores institucionais, a sustentabilidade do negócio e o cumprimento das normas de governança e compliance.</p>
         </div>
       </div>
 
-      <!-- Cards -->
-      <div class="pol-cards">
-
-        <!-- COAPH -->
-        <div class="pol-card">
-          <img class="pol-card-logo" src="ARQUIVOS/ORGANOGRAMAS/COAPHwebp-1536x1536.webp" alt="Coaph" />
-          <p class="pol-card-desc">Diretrizes que orientam a atuação da Coaph.</p>
-          <div class="pol-accordion">
-
-            <div class="pol-item">
-              <button class="pol-item-header">
-                <span class="pol-item-toggle">+</span>
-                <span class="pol-item-title">Estatuto Social</span>
-              </button>
-              <div class="pol-item-body">
-                <div class="pol-item-body-inner">
-                  <a href="#" class="pol-doc">
-                    <span class="pol-doc-date">07/08/2025 —</span>
-                    <span class="pol-doc-name">Estatuto Social da Coaph</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="pol-item">
-              <button class="pol-item-header">
-                <span class="pol-item-toggle">+</span>
-                <span class="pol-item-title">Código de Conduta e Ética</span>
-              </button>
-              <div class="pol-item-body">
-                <div class="pol-item-body-inner">
-                  <a href="#" class="pol-doc">
-                    <span class="pol-doc-date">26/02/2025 —</span>
-                    <span class="pol-doc-name">Código de Conduta e Ética Profissional</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="pol-item">
-              <button class="pol-item-header">
-                <span class="pol-item-toggle">+</span>
-                <span class="pol-item-title">Regimento Interno</span>
-              </button>
-              <div class="pol-item-body">
-                <div class="pol-item-body-inner">
-                  <a href="#" class="pol-doc">
-                    <span class="pol-doc-date">26/02/2025 —</span>
-                    <span class="pol-doc-name">Regimento Interno Coaph</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="pol-item">
-              <button class="pol-item-header">
-                <span class="pol-item-toggle">+</span>
-                <span class="pol-item-title">Políticas</span>
-              </button>
-              <div class="pol-item-body">
-                <div class="pol-item-body-inner">
-                  <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Regulamentação do Fates</span></a>
-                  <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Substituição do Cooperado</span></a>
-                  <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Sustentabilidade</span></a>
-                  <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Segurança da Informação</span></a>
-                  <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Compras e Contratações</span></a>
-                  <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Gestão de Riscos</span></a>
-                  <a href="#" class="pol-doc"><span class="pol-doc-date">05/08/2025 —</span><span class="pol-doc-name">Gerenciamento de Crises</span></a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Grupo HDOC -->
-        <div class="pol-card">
-          <img class="pol-card-logo" src="ARQUIVOS/ORGANOGRAMAS/GRUPO-1-1536x1536.png" alt="Grupo HDOC Saúde" />
-          <p class="pol-card-desc">Diretrizes que orientam a atuação do Grupo HDOC Saúde.</p>
-          <div class="pol-accordion">
-
-            <div class="pol-item">
-              <button class="pol-item-header">
-                <span class="pol-item-toggle">+</span>
-                <span class="pol-item-title">Estatuto Social</span>
-              </button>
-              <div class="pol-item-body">
-                <div class="pol-item-body-inner">
-                  <a href="#" class="pol-doc">
-                    <span class="pol-doc-date">18/02/2025 —</span>
-                    <span class="pol-doc-name">Estatuto Social</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="pol-item">
-              <button class="pol-item-header">
-                <span class="pol-item-toggle">+</span>
-                <span class="pol-item-title">Código de Conduta e Ética</span>
-              </button>
-              <div class="pol-item-body">
-                <div class="pol-item-body-inner">
-                  <a href="#" class="pol-doc">
-                    <span class="pol-doc-date">26/02/2025 —</span>
-                    <span class="pol-doc-name">Código de Conduta e Ética Profissional</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="pol-item">
-              <button class="pol-item-header">
-                <span class="pol-item-toggle">+</span>
-                <span class="pol-item-title">Regimento Interno</span>
-              </button>
-              <div class="pol-item-body">
-                <div class="pol-item-body-inner">
-                  <a href="#" class="pol-doc">
-                    <span class="pol-doc-date">Em breve —</span>
-                    <span class="pol-doc-name">Regimento Interno</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="pol-item">
-              <button class="pol-item-header">
-                <span class="pol-item-toggle">+</span>
-                <span class="pol-item-title">Políticas</span>
-              </button>
-              <div class="pol-item-body">
-                <div class="pol-item-body-inner">
-                  <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Sustentabilidade</span></a>
-                  <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Segurança da Informação</span></a>
-                  <a href="#" class="pol-doc"><span class="pol-doc-date">26/02/2025 —</span><span class="pol-doc-name">Compras e Contratações</span></a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
+      <!-- Central -->
+      <div class="ca-central">
+        <h2>Papel Estratégico e de Supervisão</h2>
+        <p>O Conselho de Administração estabelece as políticas corporativas, aprova os planos estratégicos e garante que a alta gestão opere dentro dos limites definidos. Ele é o principal elo entre os cooperados/acionistas e a diretoria executiva, promovendo equilíbrio entre performance e conformidade.</p>
       </div>
+
+      <!-- Tabs -->
+      <div class="ca-tabs" id="caTabs">
+        <button class="ca-tab-btn is-active" data-tab="competencias">Competências</button>
+        <button class="ca-tab-btn" data-tab="composicao">Composição e Mandato</button>
+        <button class="ca-tab-btn" data-tab="reunioes">Reuniões e Deliberações</button>
+        <button class="ca-tab-btn" data-tab="transparencia">Relatórios e Transparência</button>
+      </div>
+
+      <!-- Tab: Competências -->
+      <div class="ca-tab-panel is-active" id="tab-competencias">
+        <div class="ca-tab-content">
+          <img class="ca-tab-img" src="ARQUIVOS/ORGANOGRAMAS/Hierarquia.jpeg" alt="Competências do Conselho" />
+          <div class="ca-tab-body">
+            <h3>Competências do Conselho</h3>
+            <p>O Conselho de Administração é responsável por <strong>aprovar as políticas corporativas</strong>, o planejamento estratégico e o orçamento anual, além de supervisionar a execução dessas diretrizes pela diretoria executiva.</p>
+            <p>Entre suas principais atribuições estão: eleger e destituir os diretores executivos, analisar os relatórios de desempenho, aprovar investimentos relevantes e garantir o cumprimento do Código de Conduta e das políticas de governança.</p>
+            <p>O Conselho também zela pela <strong>integridade dos processos de auditoria interna e externa</strong>, assegurando que os controles internos estejam adequados e que os riscos sejam devidamente monitorados e gerenciados.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Composição -->
+      <div class="ca-tab-panel" id="tab-composicao">
+        <div class="ca-tab-content">
+          <img class="ca-tab-img" src="ARQUIVOS/ORGANOGRAMAS/COAPHwebp-1536x1536.webp" alt="Composição do Conselho" />
+          <div class="ca-tab-body">
+            <h3>Composição e Mandato</h3>
+            <p>O Conselho é formado por membros eleitos em Assembleia Geral, com <strong>mandatos definidos no Estatuto Social</strong>. A composição garante diversidade de experiências e competências complementares para a tomada de decisões estratégicas.</p>
+            <p>Os conselheiros são avaliados periodicamente quanto à sua atuação, participação nas reuniões e contribuição às discussões estratégicas, assegurando alto nível de engajamento e responsabilidade com a organização.</p>
+            <p>Para conhecer os membros atuais do Conselho, seus perfis e mandatos, acesse os <strong>documentos institucionais disponíveis na seção de Políticas</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Reuniões -->
+      <div class="ca-tab-panel" id="tab-reunioes">
+        <div class="ca-tab-content">
+          <img class="ca-tab-img" src="ARQUIVOS/GESTÃO ÁGIL/Reunião de A.webp" alt="Reuniões do Conselho" />
+          <div class="ca-tab-body">
+            <h3>Reuniões e Deliberações</h3>
+            <p>O Conselho de Administração se reúne <strong>periodicamente em reuniões ordinárias</strong>, com pauta previamente definida, e pode ser convocado extraordinariamente sempre que necessário para decisões urgentes.</p>
+            <p>As deliberações são registradas em atas formais, garantindo rastreabilidade e transparência de todas as decisões tomadas. O quórum e os procedimentos seguem as disposições do Estatuto Social e do Regimento Interno do Conselho.</p>
+            <p>Pautas recorrentes incluem aprovação de demonstrações financeiras, avaliação de riscos estratégicos, acompanhamento de metas e discussão de iniciativas de expansão e inovação.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Transparência -->
+      <div class="ca-tab-panel" id="tab-transparencia">
+        <div class="ca-tab-content">
+          <img class="ca-tab-img" src="ARQUIVOS/POLITICAS/NOSSOS DOC.jpeg" alt="Relatórios e Transparência" />
+          <div class="ca-tab-body">
+            <h3>Relatórios e Transparência</h3>
+            <p>O Conselho promove a <strong>cultura de transparência e prestação de contas</strong>, publicando relatórios periódicos sobre sua atuação, decisões e os resultados da organização para todos os cooperados e partes interessadas.</p>
+            <p>Os relatórios anuais de gestão, as atas de reunião e os pareceres do Conselho Fiscal estão disponíveis para consulta no repositório de documentos institucionais, garantindo pleno acesso à informação.</p>
+            <p>A transparência é um pilar fundamental da governança do Grupo HDOC Saúde, reforçando a confiança na administração e o comprometimento com os mais altos padrões éticos e de responsabilidade corporativa.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
 
@@ -538,10 +385,10 @@
           <ul>
             <li><a href="https://192.168.4.181/" target="_blank" rel="noopener noreferrer">SSD</a></li>
             <li><a href="organogramas.html">Governança</a></li>
-            <li><a href="#">Negócios</a></li>
-            <li><a href="#">Membros</a></li>
-            <li><a href="#">Grupos</a></li>
-            <li><a href="#">Artigos</a></li>
+            <li><a href="negocios.html">Negócios</a></li>
+            <li><a href="membros.html">Membros</a></li>
+            <li><a href="grupos.html">Grupos</a></li>
+            <li><a href="artigos.html">Artigos</a></li>
           </ul>
         </div>
       </div>
@@ -570,16 +417,14 @@
         : '0 1px 3px rgba(0,0,0,.06)';
     }, { passive: true });
 
-    // Accordion
-    document.querySelectorAll('.pol-item-header').forEach(btn => {
+    document.querySelectorAll('.ca-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const item   = btn.closest('.pol-item');
-        const isOpen = item.classList.contains('is-open');
-        item.classList.toggle('is-open', !isOpen);
-        btn.querySelector('.pol-item-toggle').textContent = isOpen ? '+' : '−';
+        document.querySelectorAll('.ca-tab-btn').forEach(b => b.classList.remove('is-active'));
+        document.querySelectorAll('.ca-tab-panel').forEach(p => p.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('is-active');
       });
     });
   </script>
-
 </body>
 </html>
